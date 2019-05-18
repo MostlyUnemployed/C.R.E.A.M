@@ -37,8 +37,6 @@ class Menu extends Nanocomponent {
     }
 
     createElement (state, emit) {
-        this.onboarding = onboarding
-        console.log(this.onboarding)
         if (this.onboarding) {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
@@ -53,7 +51,9 @@ class Menu extends Nanocomponent {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
-                <button onclick='${() => updateFunc()}'>BILBO BAGGINS</button>
+                <button onclick='${() => {
+                    console.log('maybe do something here')
+                }}'>BILBO BAGGINS</button>
             </section
             `
         }
@@ -67,7 +67,7 @@ class Menu extends Nanocomponent {
 //   setOnboarding (onboarding) {
     //   this.render(onboarding)
 //   }
-    
+
 }
 
 
