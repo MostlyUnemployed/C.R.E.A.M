@@ -41,6 +41,8 @@ function store (state, emitter) {
   //FILTERS
 
   emitter.on('KittiesLoaded', function () {
+    app.stage.removeChildren()
+    console.log('SHOULD HAVE REMOVED ALL CHILDREN')
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
     userAddresses.map(function(key) {
@@ -66,13 +68,12 @@ function store (state, emitter) {
         blur: 1
       })
       //Create the cat sprite
+      console.log(state.kitties)
       state.kitties.map((cat, i) => {
-        console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
         catSprite.angle = cat.rot
-        console.log(catSprite)
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
         catSprite.filters = [kittyStroke, kittyShadow]
@@ -129,6 +130,13 @@ function store (state, emitter) {
     console.log(wei)
     const tx = await wallet.deposit(kittyId, wei)
     console.log({ tx })
+  })
+
+  emitter.on('withdrawCream', async function () {
+    const tx = await wallet.withdrawAll()
+    console.log({ tx })
+    emitter.emit('getCompoundBalance')
+    emitter.emit('getAllKitties')
   })
 
   emitter.on('getAllKitties', async function () {

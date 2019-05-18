@@ -118,6 +118,15 @@ const funcs = {
     const compound = new ethers.Contract(contracts.compound.address, contracts.compound.abi, signer)
     const bal = await compound.getSupplyBalance(a, wethAddress)
     return ethers.utils.formatEther(bal)
+  },
+  withdrawAll: async () => {
+    const c = getCreamWallet()
+    const bal = await funcs.getCompoundBalance()
+    const tx = await c.lick(ethers.utils.parseEther(bal))
+    console.log({ tx })
+    await tx.wait()
+    console.log({ tx })
+    return tx
   }
 }
 

@@ -51,7 +51,7 @@ function view (state, emit) {
     return html`
       <body>
         <div class='balance'>My Cream: <span id='balance'></span>💦</div>
-        <button class='withdraw flex items-center justify-center'>Lick 👅</button>
+        <button class='withdraw flex items-center justify-center' onclick=${() => emit('withdrawCream')}>Lick 👅</button>
         <div id='canvas'></div>
       </body>
     `
