@@ -27,6 +27,20 @@ function view (state, emit) {
     background: #F08CA5;
     border-radius: 50px;
     font-family: 'Baloo';
+    border: none;
+    box-shadow: 0px 12px 0px #F08CA5BB;
+    cursor: pointer;
+    z-index: 999;
+  }
+  .cta:hover {
+  }
+  .cta:focus {
+    outline: none;
+  }
+  .cta:active {
+    outline: none;
+    box-shadow: 0px 1px 2px #000000AA;
+    margin-top: 12px;
   }
   .kit {
     position: fixed;
