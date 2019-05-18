@@ -23,6 +23,7 @@ function view (state, emit) {
     <button onclick='${() => {
       emit('createWallet')
     }}'>CREATE A WALLET</button>
+    
     <a href='/wall'>ROUTE TO WALL</a>
     </body>
     `

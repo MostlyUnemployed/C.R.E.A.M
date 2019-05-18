@@ -38,16 +38,12 @@ class Menu extends Nanocomponent {
     }
 
     createElement (state, emit) {
-<<<<<<< HEAD
         this.localstate = state.wallet
         console.log(this.localstate)
 
         state.updateMenu = this.updateMenuFromState
 
         if (!this.localstate.wallet) {
-=======
-        if (this.onboarding) {
->>>>>>> 912b2c302e312f9406eda1737cc367832beaeaf3
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
@@ -72,15 +68,8 @@ class Menu extends Nanocomponent {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
-<<<<<<< HEAD
                 <p>Okay so you've got a wallet</p>
                 <button>Milk your cats</button>
-=======
-                <button onclick='${() => {
-                    // need to choose a kitty and a price here and then...
-                    // emit('deposit', kittyId, priceInWei)
-                }}'>BILBO BAGGINS</button>
->>>>>>> 912b2c302e312f9406eda1737cc367832beaeaf3
             </section
             `
         }
