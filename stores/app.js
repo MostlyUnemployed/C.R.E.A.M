@@ -24,10 +24,6 @@ function store (state, emitter) {
   app.renderer.backgroundColor = 0xf8f94c;
 
 
-  state = {
-    wallet: false
-  }
-
   emitter.on('DOMContentLoaded', function () {
     //Add the canvas that Pixi automatically created for you to the HTML document
     document.getElementById('canvas').appendChild(app.view);

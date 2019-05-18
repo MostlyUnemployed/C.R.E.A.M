@@ -33,17 +33,25 @@ class Menu extends Nanocomponent {
 
     constructor () {
         super()
-        this.onboarding = null
+        this.state = null
     }
 
     createElement (state, emit) {
+<<<<<<< HEAD
+        this.state = state.onboarding
+
+        if (!this.state.wallet) {
+=======
         if (this.onboarding) {
+>>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
                 <button onclick='${() => {
-                    this.onboarding = false
+                    emit('createWallet'),
                     this.render()
+                    console.log(this.state)
+                    console.log(state.onboarding)
                 }}'>Create Wallet</button>
             </section
             `
@@ -51,9 +59,13 @@ class Menu extends Nanocomponent {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
+<<<<<<< HEAD
+                <button onclick='${() => emit('createWallet')}'>BILBO BAGGINS</button>
+=======
                 <button onclick='${() => {
                     console.log('maybe do something here')
                 }}'>BILBO BAGGINS</button>
+>>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
             </section
             `
         }
@@ -61,7 +73,8 @@ class Menu extends Nanocomponent {
 
     // Implement conditional rendering
   update () {
-    return true
+    // this.state != state.onboarding
+    true
   }
 
 //   setOnboarding (onboarding) {
