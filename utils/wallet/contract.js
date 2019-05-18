@@ -1,7 +1,16 @@
 module.exports = {
   creamFactory: {
-    address: '0xc33864e15c628a07ea2eb0fe2be1da2712f1888b',
+    address: '0xe8a772b66637dffab7164093db8107ee86ade532',
     abi: [
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "deployCream",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
       {
         "constant": true,
         "inputs": [
@@ -15,6 +24,20 @@ module.exports = {
           {
             "name": "",
             "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getNumberOfUsers",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
           }
         ],
         "payable": false,
@@ -39,20 +62,30 @@ module.exports = {
         "payable": false,
         "stateMutability": "view",
         "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "deployCream",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
       }
     ]
   },
   cream: {
     abi: [
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "fatcats",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
       {
         "constant": true,
         "inputs": [],
@@ -125,12 +158,45 @@ module.exports = {
       },
       {
         "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "kitties",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
           {
             "name": "",
             "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getKittyCount",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
           }
         ],
         "payable": false,

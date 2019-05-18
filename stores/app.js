@@ -63,6 +63,7 @@ function store (state, emitter) {
   emitter.on('connectWallet', async function () {
     await wallet.connect()
     emitter.emit('getWallet')
+    emitter.emit('getAllKitties')
   })
 
   // CREATE WALLETS
@@ -87,8 +88,15 @@ function store (state, emitter) {
   })
 
   emitter.on('deposit', async function (kittyId, wei) {
+    console.log(kittyId)
+    console.log(wei)
     const tx = await wallet.deposit(kittyId, wei)
     console.log({ tx })
+  })
+
+  emitter.on('getAllKitties', async function () {
+    const kitties = await wallet.getAllKitties()
+    state.kitties = kitties
   })
 
   emitter.emit('connectWallet')
