@@ -22,7 +22,9 @@ function store (state, emitter) {
   app.renderer.backgroundColor = 0xf8f94c;
 
   
-  state = []
+  state = {
+    wallet: false
+  }
 
   emitter.on('DOMContentLoaded', function () {
     //Add the canvas that Pixi automatically created for you to the HTML document
@@ -58,6 +60,17 @@ function store (state, emitter) {
   }
   
   loadMyKitties()
+
+
+// CREATE WALLETS
+emitter.on('createWallet', function () {
+    state.wallet = true
+    emitter.emit('render')
+    console.log(state.wallet)
+}) 
+
+
+
 
 }
 
