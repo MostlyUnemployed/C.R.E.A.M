@@ -13,7 +13,7 @@ let myAddress
 // we need to pass an assist instance into these things in order to get them
 // to display transaction notifications
 
-module.exports = {
+const funcs = {
   connect: async () => {
     const p = await window.ethereum.enable()
     provider = new ethers.providers.Web3Provider(window.web3.currentProvider)
@@ -22,18 +22,18 @@ module.exports = {
     return ethers
   },
   isDeployed: async () => {
-    const f = new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
+    const f = getFactoryContract()
     myCreamAddress = await f.creams(myAddress)
     console.log(myCreamAddress)
     return (myCreamAddress !== ZERO_ADDRESS)
   },
   getWallet: async () => {
-    const f = new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
+    const f = getFactoryContract()
     myCreamAddress = await f.creams(myAddress)
     return myCreamAddress
   },
   deploy: async () => {
-    const f = new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
+    const f = getFactoryContract()
     console.log(f)
     const tx = await f.deployCream()
     console.log(tx)
@@ -44,14 +44,73 @@ module.exports = {
     return myCreamAddress
     // at this point the contract is ready and we can interact with it n stuff
   },
+  getOwners: async () => {
+    const f = getFactoryContract()
+    const numberOfUsers = await f.getNumberOfUsers()
+    let users = []
+    for (let i = 0; i < numberOfUsers; i++) {
+      users.push(f.users(i))
+    }
+    const u = await Promise.all(users)
+    console.log(u)
+    return u
+  },
+  getAllKitties: async () => {
+    const owners = await funcs.getOwners()
+    const kitties = {}
+    for (let owner of owners) {
+      kitties[owner] = await funcs.getAllKittiesForOwner(owner)
+    }
+    return kitties
+  },
+  getAllKittiesForOwner: async (addr) => {
+    const c = getCreamWallet()
+    const kittyCount = await c.getKittyCount()
+    const kittyPromises = []
+    for (let i = 0; i < kittyCount; i++) {
+      kittyPromises.push(c.kitties(i))
+    }
+    const kittyIds = await Promise.all(kittyPromises)
+    const fatcatPromises = []
+    for (let id of kittyIds) {
+      fatcatPromises.push(c.fatcats(id))
+    }
 
+    const fatcats = await Promise.all(fatcatPromises)
+
+    const kitties = []
+    for (let i = 0; i < kittyIds.length; i++) {
+      kitties.push({
+        id: kittyIds[i].toNumber(),
+        value: ethers.utils.formatEther(fatcats[i]),
+        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].toNumber()}.svg`
+      })
+    }
+
+    return kitties
+  },
   deposit: async (kittyId, wei) => {
-    const c = new ethers.Contract(myCreamAddress, contracts.cream.abi)
+    const c = getCreamWallet()
+    console.log(kittyId)
+    console.log(wei)
+    console.log(c)
     const tx = await c.meow(kittyId, {
-      value: wei
+      value: ethers.utils.parseEther('0.01')
     })
+    console.log(tx)
     await tx.wait()
+    console.log(tx)
     return tx
     // now we have deposited, we can print the cat or somehting
   }
 }
+
+function getFactoryContract() {
+  return new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
+}
+
+function getCreamWallet() {
+  return new ethers.Contract(myCreamAddress, contracts.cream.abi, signer)
+}
+
+module.exports = funcs

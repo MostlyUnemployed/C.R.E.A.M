@@ -59,9 +59,11 @@ function store (state, emitter) {
     state.isDeployed = isDeployed
     if (state.isDeployed) {
       emitter.emit('getWallet')
+      emitter.emit('getAllKitties')
       return
     }
     state.wallet = false
+
   })
 // GET YOUR WALLET IF YOU HAVE ONE
   emitter.on('getWallet', async function () {
@@ -90,14 +92,17 @@ function store (state, emitter) {
 
   // GET CREAM ADDRESS
   emitter.on('deposit', async function (kittyId, wei) {
+    console.log(kittyId)
+    console.log(wei)
     const tx = await wallet.deposit(kittyId, wei)
     console.log({ tx })
   })
 
-  
+  emitter.on('getAllKitties', async function () {
+    const kitties = await wallet.getAllKitties()
+    state.kitties = kitties
+  })
 
-  // the stack
-  loadMyKitties()
   emitter.emit('connectWallet')
 
 
