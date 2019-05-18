@@ -76,6 +76,7 @@ function store (state, emitter) {
     state.isDeployed = isDeployed
     if (state.isDeployed) {
       emitter.emit('getWallet')
+      emitter.emit('getMyKitties')
       emitter.emit('getAllKitties')
       return
     }
@@ -113,6 +114,14 @@ function store (state, emitter) {
     console.log({ tx })
   })
 
+  emitter.on('getMyKitties', async function () {
+    let myWallet = await wallet.getMyAddress()
+    let myKitties = await ckUtils.getKitties(myWallet)
+    state.myKitties = myKitties
+    state.myWallet = myWallet
+    console.log(myKitties)
+  })
+
   emitter.on('getAllKitties', async function () {
     const kitties = await wallet.getAllKitties()
     state.kittyData = kitties
@@ -132,6 +141,8 @@ function store (state, emitter) {
   })
 
   emitter.on('DOMContentLoaded', () => {
+    
+
     setTimeout(function(){
       if (state.route === 'wall'){
         document.getElementById('canvas').appendChild(app.view);

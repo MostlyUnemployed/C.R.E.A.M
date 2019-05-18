@@ -27,6 +27,9 @@ const funcs = {
     console.log(myCreamAddress)
     return (myCreamAddress !== ZERO_ADDRESS)
   },
+  getMyAddress: async () => {
+    return myAddress
+  },
   getWallet: async () => {
     const f = getFactoryContract()
     myCreamAddress = await f.creams(myAddress)

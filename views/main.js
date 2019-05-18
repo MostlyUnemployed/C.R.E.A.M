@@ -82,11 +82,12 @@ function view (state, emit) {
           emit('createWallet')
         }}'>I am over 18</button>
       </div>
-      <img class='kit k1' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1054559.png' />
-      <img class='kit k2' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/420.png' />
-      <img class='kit k3' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/221.png' />
-      <img class='kit k4' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/556220.png' />
-      <img class='kit k5' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/729953.png' />
-    </body>
-  `
+      </body>
+      `
 }
+
+      // <img class='kit k1' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/1054559.png' />
+      // <img class='kit k2' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/420.png' />
+      // <img class='kit k3' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/221.png' />
+      // <img class='kit k4' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/556220.png' />
+      // <img class='kit k5' src='https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/729953.png' />
