@@ -64,7 +64,6 @@ const funcs = {
     for (let owner of owners) {
       kitties[owner] = await funcs.getAllKittiesForOwner(owner)
     }
-    console.log({kitties})
     return kitties
   },
   getAllKittiesForOwner: async (addr) => {
@@ -77,9 +76,12 @@ const funcs = {
       kittyPromises.push(c.kitties(i))
     }
     const kittyIds = await Promise.all(kittyPromises)
+
+    console.log(kittyIds)
+
     const fatcatPromises = []
-    for (let id of kittyIds) {
-      fatcatPromises.push(c.fatcats(id))
+    for (let kit of kittyIds) {
+      fatcatPromises.push(c.fatcats(kit.id))
     }
 
     const fatcats = await Promise.all(fatcatPromises)
@@ -87,9 +89,12 @@ const funcs = {
     const kitties = []
     for (let i = 0; i < kittyIds.length; i++) {
       kitties.push({
-        id: kittyIds[i].toNumber(),
+        id: kittyIds[i].id.toNumber(),
         value: ethers.utils.formatEther(fatcats[i]),
-        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].toNumber()}.svg`
+        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].id.toNumber()}.svg`,
+        x: kittyIds[i].x.toNumber(),
+        y: kittyIds[i].y.toNumber(),
+        rot: kittyIds[i].rot.toNumber()
       })
     }
 
@@ -108,6 +113,14 @@ const funcs = {
     console.log(tx)
     return tx
     // now we have deposited, we can print the cat or somehting
+  },
+  getCompoundBalance: async () => {
+    const c = getCreamWallet()
+    const a = c.address
+    const wethAddress = contracts.weth.address
+    const compound = new ethers.Contract(contracts.compound.address, contracts.compound.abi, signer)
+    const bal = await compound.getSupplyBalance(a, wethAddress)
+    return ethers.utils.formatEther(bal)
   }
 }
 
