@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
 import wallet from '../utils/wallet'
+import { OutlineFilter, DropShadowFilter } from 'pixi-filters';
+
 
 module.exports = store
 
@@ -26,31 +28,47 @@ function store (state, emitter) {
   app.renderer.resize(window.innerWidth, window.innerHeight);
   app.renderer.backgroundColor = 0xf8f94c;
 
+  //FILTERS
+
   emitter.on('KittiesLoaded', function () {
-    let catStickers = []
-    //maps loaded kitties and adds them to Pixi Loader
-    state.cats.map((cat, i) => {
-      loader.add(`cat${i}`, cat.image_url)
+    let userAddresses = Object.keys(state.kittyData)
+    let kitties = []
+    userAddresses.map(function(key) {
+      state.kittyData[key].length > 0 && state.kittyData[key].map((kitty) => {
+        kitties.push(kitty)
+      })
+      state.kitties = kitties
+    });
+    
+  
+    // maps loaded kitties and adds them to Pixi Loader
+    state.kitties.map((cat, i) => {
+      loader.add(`cat${i}`, cat.img)
     })
 
     function setup() {
+
+      const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
+      const kittyShadow = new DropShadowFilter({
+        distance: 0.1,
+        color: 0x000000,
+        alpha: 0.1,
+        blur: 1
+
+      })
       //Create the cat sprite
-      state.cats.map((cat, i) => {
+      state.kitties.map((cat, i) => {
         let catSprite = new Sprite(resources['cat' + i].texture);
-        catSprite.x = Math.random() * 100
-        catSprite.y = Math.random() * 100
+        catSprite.x = Math.random() * (window.innerWidth * 0.9)
+        catSprite.y = Math.random() * (window.innerHeight * 0.9)
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
+        catSprite.filters = [kittyStroke, kittyShadow]
       })
     }
     //This `setup` function will run when the image has loaded
     loader.load(setup);
   })
-  //loads ya cats
-  const loadMyKitties = async () => {
-    state.cats = await ckUtils.getKitties()
-    emitter.emit('KittiesLoaded')
-  }
 
   // CONNECT METAMASK AND CHECK FOR CREAM WALLET
   emitter.on('connectWallet', async function () {
@@ -98,7 +116,8 @@ function store (state, emitter) {
 
   emitter.on('getAllKitties', async function () {
     const kitties = await wallet.getAllKitties()
-    state.kitties = kitties
+    state.kittyData = kitties
+    emitter.emit('KittiesLoaded')
   })
 
   emitter.emit('connectWallet')

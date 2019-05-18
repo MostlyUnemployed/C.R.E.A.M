@@ -48,11 +48,11 @@
     "@pixi/core" "^5.0.2"
     "@pixi/display" "^5.0.1"
 
-"@pixi/constants@^5.0.0-rc.3":
+"@pixi/constants@^5.0.0-X", "@pixi/constants@^5.0.0-rc.3":
   version "5.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@pixi/constants/-/constants-5.0.0-rc.3.tgz#0f7236bd5392b68aca7c981608310ca25e481861"
 
-"@pixi/core@^5.0.2":
+"@pixi/core@^5.0.0-X", "@pixi/core@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/core/-/core-5.0.2.tgz#c3091735d5ed579f5f74164de66d84ebe96a7021"
   dependencies:
@@ -80,24 +80,101 @@
     "@pixi/math" "^5.0.0-rc.3"
     "@pixi/utils" "^5.0.1"
 
-"@pixi/filter-alpha@^5.0.2":
+"@pixi/filter-adjustment@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-adjustment/-/filter-adjustment-3.0.1.tgz#8a0064082e65b231d2c751dac660d78daa44bfbb"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-advanced-bloom@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-advanced-bloom/-/filter-advanced-bloom-3.0.1.tgz#8c1ba409e45f3feeab0efcfa69473430a9ff80a1"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/filter-kawase-blur" "^3.0.1"
+    "@pixi/settings" "^5.0.0-X"
+
+"@pixi/filter-alpha@^5.0.0-X", "@pixi/filter-alpha@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-alpha/-/filter-alpha-5.0.2.tgz#318caac1761ce35afd53108367e47d3e11c44495"
   dependencies:
     "@pixi/core" "^5.0.2"
 
-"@pixi/filter-blur@^5.0.2":
+"@pixi/filter-ascii@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-ascii/-/filter-ascii-3.0.1.tgz#cf89e6afc90c1efac8de31bcad302c9e2991e14f"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-bevel@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-bevel/-/filter-bevel-3.0.1.tgz#6ed5eed7b40ad3fb03c463e4be0fd128431964a2"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-bloom@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-bloom/-/filter-bloom-3.0.1.tgz#06435936cc402e620ae16f67b3e4e6d4618c62a8"
+  dependencies:
+    "@pixi/constants" "^5.0.0-X"
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/filter-alpha" "^5.0.0-X"
+    "@pixi/filter-blur" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+    "@pixi/settings" "^5.0.0-X"
+
+"@pixi/filter-blur@^5.0.0-X", "@pixi/filter-blur@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-blur/-/filter-blur-5.0.2.tgz#af2a463993722ce6e80ab7934e57532ab7105925"
   dependencies:
     "@pixi/core" "^5.0.2"
     "@pixi/settings" "^5.0.1"
 
+"@pixi/filter-bulge-pinch@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-bulge-pinch/-/filter-bulge-pinch-3.0.1.tgz#bd3b888a6c073e9045c3824e00f463a0cc4aaed1"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-color-map@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-color-map/-/filter-color-map-3.0.1.tgz#c946cf0d7acd8fd71cb3f3e98a255ff884a54f35"
+  dependencies:
+    "@pixi/constants" "^5.0.0-X"
+    "@pixi/core" "^5.0.0-X"
+
 "@pixi/filter-color-matrix@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-color-matrix/-/filter-color-matrix-5.0.2.tgz#b9698144783d16ed4aa22b80cea44b9441ab4841"
   dependencies:
     "@pixi/core" "^5.0.2"
+
+"@pixi/filter-color-replace@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-color-replace/-/filter-color-replace-3.0.1.tgz#af79c9215abbcd1da43c2dd221a2a523aeeedb50"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-convolution@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-convolution/-/filter-convolution-3.0.1.tgz#3c2900d04ff072aa659e53faf138b26d0200b7b1"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-cross-hatch@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-cross-hatch/-/filter-cross-hatch-3.0.1.tgz#4ebfd0f28dfecc1bc2d7e06fcb473cb2ad8b926d"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-crt@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-crt/-/filter-crt-3.0.1.tgz#091bb559bea1839122de2835af1c597fafc6d78a"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
 
 "@pixi/filter-displacement@^5.0.2":
   version "5.0.2"
@@ -106,17 +183,151 @@
     "@pixi/core" "^5.0.2"
     "@pixi/math" "^5.0.0-rc.3"
 
+"@pixi/filter-dot@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-dot/-/filter-dot-3.0.1.tgz#d8ce485ea377535489981a64ec139303e19f8b71"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-drop-shadow@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-drop-shadow/-/filter-drop-shadow-3.0.1.tgz#18ac11285c94792d3cd7fe8ae5c38e20f1a74c83"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/filter-kawase-blur" "^3.0.1"
+    "@pixi/math" "^5.0.0-X"
+    "@pixi/settings" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-emboss@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-emboss/-/filter-emboss-3.0.1.tgz#9f54aaca3b4e7a4d4de98df3b916bf52a624522f"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
 "@pixi/filter-fxaa@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-fxaa/-/filter-fxaa-5.0.2.tgz#d9f72f7d5d512c00728dc9333b4e1053aa4593eb"
   dependencies:
     "@pixi/core" "^5.0.2"
 
+"@pixi/filter-glitch@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-glitch/-/filter-glitch-3.0.2.tgz#65be6e5c9d31f6711e96dcdcb766fbc471f1a7d3"
+  dependencies:
+    "@pixi/constants" "^5.0.0-X"
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+
+"@pixi/filter-glow@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-glow/-/filter-glow-3.0.1.tgz#183de4c2974fceecb6dc9b35e6017cbad582134e"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-godray@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-godray/-/filter-godray-3.0.1.tgz#187fea5e4981fe6ffc490533d2b3d7916538311e"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+
+"@pixi/filter-kawase-blur@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-kawase-blur/-/filter-kawase-blur-3.0.1.tgz#630a6d344509dd265733cea4f79e48e5ca7f97a9"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+
+"@pixi/filter-motion-blur@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-motion-blur/-/filter-motion-blur-3.0.1.tgz#662b79f2a77fe5271b0552df22b54c7b52f42cdd"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+
+"@pixi/filter-multi-color-replace@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-multi-color-replace/-/filter-multi-color-replace-3.0.1.tgz#0aed68e99af0be383b19e06250c17979b052e48e"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
 "@pixi/filter-noise@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@pixi/filter-noise/-/filter-noise-5.0.2.tgz#aec7eb315fb034aff86cf16a63f5395e7e695e18"
   dependencies:
     "@pixi/core" "^5.0.2"
+
+"@pixi/filter-old-film@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-old-film/-/filter-old-film-3.0.1.tgz#93bc305e16fb87b9f91d56df2919d178e1e947ac"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-outline@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-outline/-/filter-outline-3.0.1.tgz#697f278997b0f2841fe5ca51963c0394eb2d3272"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-pixelate@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-pixelate/-/filter-pixelate-3.0.1.tgz#92e3c07e71c5c60f56e37fc1fe19d0cda820279c"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-radial-blur@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-radial-blur/-/filter-radial-blur-3.0.1.tgz#0ca24f4f7ed74b99c8e29d60ea7808301aa174ee"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-reflection@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-reflection/-/filter-reflection-3.0.1.tgz#55a6051e4be66019f54a7077e3989daad8a947a5"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-rgb-split@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-rgb-split/-/filter-rgb-split-3.0.1.tgz#dc3eb9c4fecd4f0fe4fda52597308ef410c203ed"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-shockwave@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-shockwave/-/filter-shockwave-3.0.1.tgz#5d448fc6aba7bb4bb0041c38396a857ddb19ec35"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-simple-lightmap@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-simple-lightmap/-/filter-simple-lightmap-3.0.1.tgz#943deed7703d7a392519a2a6122dc2b1b001f3a5"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/utils" "^5.0.0-X"
+
+"@pixi/filter-tilt-shift@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-tilt-shift/-/filter-tilt-shift-3.0.1.tgz#0640f04be74e51e0d8d542b512d04df17fc3350d"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+    "@pixi/math" "^5.0.0-X"
+
+"@pixi/filter-twist@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-twist/-/filter-twist-3.0.1.tgz#7613b813555a18080fcc8283de6d26cddfb22009"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
+
+"@pixi/filter-zoom-blur@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-zoom-blur/-/filter-zoom-blur-3.0.1.tgz#f302369e90d583f967b0b620d0b34efc6d267921"
+  dependencies:
+    "@pixi/core" "^5.0.0-X"
 
 "@pixi/graphics@^5.0.2":
   version "5.0.2"
@@ -147,7 +358,7 @@
     "@pixi/utils" "^5.0.1"
     resource-loader "^2.2.4"
 
-"@pixi/math@^5.0.0-rc.3":
+"@pixi/math@^5.0.0-X", "@pixi/math@^5.0.0-rc.3":
   version "5.0.0-rc.3"
   resolved "https://registry.yarnpkg.com/@pixi/math/-/math-5.0.0-rc.3.tgz#847e8cf834dc4238ec3cf0ec185ea37be85ba6aa"
 
@@ -228,7 +439,7 @@
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@pixi/runner/-/runner-5.0.0.tgz#1457e9f520310ac644c02b1c57c1fe3e0a1feb4f"
 
-"@pixi/settings@^5.0.1":
+"@pixi/settings@^5.0.0-X", "@pixi/settings@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@pixi/settings/-/settings-5.0.1.tgz#a8ab7b0b8d99d8c98f30c35220a9dde42d4ba149"
   dependencies:
@@ -301,7 +512,7 @@
   dependencies:
     "@pixi/settings" "^5.0.1"
 
-"@pixi/utils@^5.0.1":
+"@pixi/utils@^5.0.0-X", "@pixi/utils@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@pixi/utils/-/utils-5.0.1.tgz#ddcd5de4604ec0ca1d3155ed8bb6af10aa16cbb4"
   dependencies:
@@ -4654,6 +4865,42 @@ pirates@^3.0.2:
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-3.0.2.tgz#7e6f85413fd9161ab4e12b539b06010d85954bb9"
   dependencies:
     node-modules-regexp "^1.0.0"
+
+pixi-filters@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/pixi-filters/-/pixi-filters-3.0.2.tgz#e842f5b5fc94c3dfec70b46d8fb7b123c2128580"
+  dependencies:
+    "@pixi/filter-adjustment" "^3.0.1"
+    "@pixi/filter-advanced-bloom" "^3.0.1"
+    "@pixi/filter-ascii" "^3.0.1"
+    "@pixi/filter-bevel" "^3.0.1"
+    "@pixi/filter-bloom" "^3.0.1"
+    "@pixi/filter-bulge-pinch" "^3.0.1"
+    "@pixi/filter-color-map" "^3.0.1"
+    "@pixi/filter-color-replace" "^3.0.1"
+    "@pixi/filter-convolution" "^3.0.1"
+    "@pixi/filter-cross-hatch" "^3.0.1"
+    "@pixi/filter-crt" "^3.0.1"
+    "@pixi/filter-dot" "^3.0.1"
+    "@pixi/filter-drop-shadow" "^3.0.1"
+    "@pixi/filter-emboss" "^3.0.1"
+    "@pixi/filter-glitch" "^3.0.2"
+    "@pixi/filter-glow" "^3.0.1"
+    "@pixi/filter-godray" "^3.0.1"
+    "@pixi/filter-kawase-blur" "^3.0.1"
+    "@pixi/filter-motion-blur" "^3.0.1"
+    "@pixi/filter-multi-color-replace" "^3.0.1"
+    "@pixi/filter-old-film" "^3.0.1"
+    "@pixi/filter-outline" "^3.0.1"
+    "@pixi/filter-pixelate" "^3.0.1"
+    "@pixi/filter-radial-blur" "^3.0.1"
+    "@pixi/filter-reflection" "^3.0.1"
+    "@pixi/filter-rgb-split" "^3.0.1"
+    "@pixi/filter-shockwave" "^3.0.1"
+    "@pixi/filter-simple-lightmap" "^3.0.1"
+    "@pixi/filter-tilt-shift" "^3.0.1"
+    "@pixi/filter-twist" "^3.0.1"
+    "@pixi/filter-zoom-blur" "^3.0.1"
 
 pixi.js@^5.0.2:
   version "5.0.2"

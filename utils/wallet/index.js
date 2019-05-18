@@ -52,7 +52,7 @@ const funcs = {
       users.push(f.users(i))
     }
     const u = await Promise.all(users)
-    console.log(u)
+    console.log({u: u})
     return u
   },
   getAllKitties: async () => {
@@ -89,7 +89,6 @@ const funcs = {
       })
     }
 
-    console.log(kitties)
 
     return kitties
   },
@@ -114,7 +113,6 @@ function getFactoryContract() {
 }
 
 function getCreamWallet(ca = myCreamAddress) {
-  console.log(ca)
   return new ethers.Contract(ca, contracts.cream.abi, signer)
 }
 
