@@ -15,13 +15,16 @@ function view (state, emit) {
     background: #f8f94c;
   }
   `
+  console.log(state.wallet)
 
-  return html`
-  <body>
-    ${menu.render(state, emit)}
-    <div id='canvas'></div>
-  </body>
 
-  `
+    return html`
+    <body>
+    <button onclick='${() => {
+      emit('createWallet')
+    }}'>CREATE A WALLET</button>
+    <a href='/wall'>ROUTE TO WALL</a>
+    </body>
+    `
 
 }

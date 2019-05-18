@@ -33,39 +33,43 @@ class Menu extends Nanocomponent {
 
     constructor () {
         super()
-        this.state = null
+        this.localstate = null
+        this.render = this.render.bind(this)
     }
 
     createElement (state, emit) {
-<<<<<<< HEAD
-        this.state = state.onboarding
+        this.localstate = state.wallet
+        console.log(this.localstate)
 
-        if (!this.state.wallet) {
-=======
-        if (this.onboarding) {
->>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
+        state.updateMenu = this.updateMenuFromState
+
+        if (!this.localstate.wallet) {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
+                <p>Welcome to the app, I don't think you have a wallet</p>
                 <button onclick='${() => {
                     emit('createWallet'),
                     this.render()
-                    console.log(this.state)
-                    console.log(state.onboarding)
                 }}'>Create Wallet</button>
             </section
             `
-        } else {
+        } 
+        if (this.localstate.wallet === 'LOADING') {
+            return html`
+            <section class='${menuStyles} flex-column justify-center items-center'>
+            <p>We loading fam</p>
+                <button>Milk your cats</button>
+            </section
+            `
+        }
+
+        if (this.localstate.wallet) {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
-<<<<<<< HEAD
-                <button onclick='${() => emit('createWallet')}'>BILBO BAGGINS</button>
-=======
-                <button onclick='${() => {
-                    console.log('maybe do something here')
-                }}'>BILBO BAGGINS</button>
->>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
+                <p>Okay so you've got a wallet</p>
+                <button>Milk your cats</button>
             </section
             `
         }
@@ -73,14 +77,9 @@ class Menu extends Nanocomponent {
 
     // Implement conditional rendering
   update () {
-    // this.state != state.onboarding
+    // this.localstate != state.onboarding
     true
   }
-
-//   setOnboarding (onboarding) {
-    //   this.render(onboarding)
-//   }
-
 }
 
 

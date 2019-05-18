@@ -15,6 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(require('./stores/app'))
 
 app.route('/', require('./views/main'))
+app.route('/wall', require('./views/wall'))
 app.route('/*', require('./views/404'))
 
 module.exports = app.mount('body')

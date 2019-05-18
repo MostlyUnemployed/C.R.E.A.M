@@ -4,6 +4,9 @@ import wallet from '../utils/wallet'
 module.exports = store
 
 function store (state, emitter) {
+
+  state.wallet = false
+
   // Get crypto kitties utilities
   const ckUtils = require('../utils/kittys')
   //Defining Pixi Aliases
@@ -22,13 +25,6 @@ function store (state, emitter) {
 
   app.renderer.resize(window.innerWidth, window.innerHeight);
   app.renderer.backgroundColor = 0xf8f94c;
-
-
-  emitter.on('DOMContentLoaded', function () {
-    //Add the canvas that Pixi automatically created for you to the HTML document
-    document.getElementById('canvas').appendChild(app.view);
-  })
-
 
   emitter.on('KittiesLoaded', function () {
     let catStickers = []
@@ -49,7 +45,6 @@ function store (state, emitter) {
     }
     //This `setup` function will run when the image has loaded
     loader.load(setup);
-
   })
   //loads ya cats
   const loadMyKitties = async () => {
@@ -57,43 +52,73 @@ function store (state, emitter) {
     emitter.emit('KittiesLoaded')
   }
 
-  loadMyKitties()
-
-  // CONNECT WALLET
+  // CONNECT METAMASK AND CHECK FOR CREAM WALLET
   emitter.on('connectWallet', async function () {
     await wallet.connect()
-    emitter.emit('getWallet')
-  })
-
-  // CREATE WALLETS
-  emitter.on('createWallet', async function () {
     const isDeployed = await wallet.isDeployed()
     state.isDeployed = isDeployed
+    if (state.isDeployed) {
+      emitter.emit('getWallet')
+      return
+    }
+    state.wallet = false
+  })
+// GET YOUR WALLET IF YOU HAVE ONE
+  emitter.on('getWallet', async function () {
+    state.wallet = 'LOADING'
+    console.log(state.wallet)
+    const creamWallet = await wallet.getWallet()
+    state.creamAddress = creamWallet
+    state.wallet = true
+    emitter.emit('render')
+    console.log(state.wallet)
+  })
+ 
+
+  // CREATE ONE IF YOU DONT
+  emitter.on('createWallet', async function () {
+    const isDeployed = await wallet.isDeployed()
     if (isDeployed) {
+      state.wallet = true
       console.error('Wallet already deployed')
       return
     }
-    state.wallet = true
-    emitter.emit('render')
     const address = await wallet.deploy()
     state.creamAddress = address
+    state.wallet = true
   })
 
   // GET CREAM ADDRESS
-  emitter.on('getWallet', async function () {
-    const creamWallet = await wallet.getWallet()
-    state.creamAddress = creamWallet
-    console.log(state)
-  })
-
   emitter.on('deposit', async function (kittyId, wei) {
     const tx = await wallet.deposit(kittyId, wei)
     console.log({ tx })
   })
 
+  
+
+  // the stack
+  loadMyKitties()
   emitter.emit('connectWallet')
 
 
+  emitter.on('navigate', () => {
+    console.log(state.route)
+    setTimeout(function(){ 
+      if (state.route === 'wall'){
+        document.getElementById('canvas').appendChild(app.view);
+      }
+     }, 1000);
+  })
+  
+  emitter.on('DOMContentLoaded', () => {
+    setTimeout(function(){ 
+      if (state.route === 'wall'){
+        document.getElementById('canvas').appendChild(app.view);
+      }
+     }, 1000);
+  })
+
+    //Add the canvas that Pixi automatically created for you to the HTML documens
 }
 
 //  LOADER SYNTAX FOR WHEN SHIT GETS REAL
