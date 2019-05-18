@@ -61,6 +61,7 @@ const funcs = {
     for (let owner of owners) {
       kitties[owner] = await funcs.getAllKittiesForOwner(owner)
     }
+    console.log({kitties})
     return kitties
   },
   getAllKittiesForOwner: async (addr) => {
@@ -88,7 +89,6 @@ const funcs = {
         img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].toNumber()}.svg`
       })
     }
-
 
     return kitties
   },

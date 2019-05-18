@@ -54,7 +54,6 @@ function store (state, emitter) {
         color: 0x000000,
         alpha: 0.1,
         blur: 1
-
       })
       //Create the cat sprite
       state.kitties.map((cat, i) => {
