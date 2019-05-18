@@ -27,6 +27,11 @@ module.exports = {
     console.log(myCreamAddress)
     return (myCreamAddress !== ZERO_ADDRESS)
   },
+  getWallet: async () => {
+    const f = new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
+    myCreamAddress = await f.creams(myAddress)
+    return myCreamAddress
+  },
   deploy: async () => {
     const f = new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
     console.log(f)
@@ -36,7 +41,7 @@ module.exports = {
     console.log(tx)
     myCreamAddress = await f.creams(myAddress)
     console.log(myCreamAddress)
-    return tx
+    return myCreamAddress
     // at this point the contract is ready and we can interact with it n stuff
   },
 
