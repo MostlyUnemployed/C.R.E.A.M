@@ -37,9 +37,13 @@ class Menu extends Nanocomponent {
     }
 
     createElement (state, emit) {
+<<<<<<< HEAD
         this.state = state.onboarding
 
         if (!this.state.wallet) {
+=======
+        if (this.onboarding) {
+>>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
@@ -55,7 +59,13 @@ class Menu extends Nanocomponent {
             return html`
             <section class='${menuStyles} flex-column justify-center items-center'>
                 <h1>C.R.E.A.M</h1>
+<<<<<<< HEAD
                 <button onclick='${() => emit('createWallet')}'>BILBO BAGGINS</button>
+=======
+                <button onclick='${() => {
+                    console.log('maybe do something here')
+                }}'>BILBO BAGGINS</button>
+>>>>>>> 5bd3bc640c1fdb2383841174ec8ea012a3151679
             </section
             `
         }
@@ -70,7 +80,7 @@ class Menu extends Nanocomponent {
 //   setOnboarding (onboarding) {
     //   this.render(onboarding)
 //   }
-    
+
 }
 
 
