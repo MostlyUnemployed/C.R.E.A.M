@@ -16,13 +16,9 @@ function view (state, emit) {
   }
   `
 
-  const updateFunc = () => {
-    menu.render()
-  }
-
   return html`
   <body>
-    ${menu.render()}
+    ${menu.render(state, emit)}
     <div id='canvas'></div>
   </body>
 
