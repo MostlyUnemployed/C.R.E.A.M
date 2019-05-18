@@ -72,7 +72,7 @@ function view (state, emit) {
   }
   `
 
-  // if (state.wallet) setTimeout(() => emit('pushState', '/wall'), 1000)
+  if (state.wallet) setTimeout(() => emit('pushState', '/wall'), 1000)
 
   return html`
     <body class='bg w-100 h-100'>

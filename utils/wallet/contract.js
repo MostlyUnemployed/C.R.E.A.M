@@ -1,6 +1,6 @@
 module.exports = {
   creamFactory: {
-    address: '0xe8a772b66637dffab7164093db8107ee86ade532',
+    address: '0x614613b8434c019ac8534b85365d8e09b963bdc5',
     abi: [
       {
         "constant": false,
@@ -106,6 +106,18 @@ module.exports = {
           {
             "name": "_kittyId",
             "type": "uint256"
+          },
+          {
+            "name": "x",
+            "type": "int256"
+          },
+          {
+            "name": "y",
+            "type": "int256"
+          },
+          {
+            "name": "rot",
+            "type": "uint256"
           }
         ],
         "name": "meow",
@@ -167,7 +179,23 @@ module.exports = {
         "name": "kitties",
         "outputs": [
           {
-            "name": "",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "name": "x",
+            "type": "int256"
+          },
+          {
+            "name": "y",
+            "type": "int256"
+          },
+          {
+            "name": "rot",
             "type": "uint256"
           }
         ],
@@ -227,18 +255,38 @@ module.exports = {
         "payable": true,
         "stateMutability": "payable",
         "type": "fallback"
-      },
+      }
+    ]
+  },
+  weth: {
+    address: '0xc778417E063141139Fce010982780140Aa0cD5Ab'
+  },
+  compound: {
+    address: '0x61bbd7Bd5EE2A202d7e62519750170A52A8DFD45', // RINKEBY
+    // address: '0x3FDA67f7583380E67ef93072294a7fAc882FD7E7', // MAINNET
+    abi: [
       {
-        "anonymous": false,
+        "constant": true,
         "inputs": [
           {
-            "indexed": false,
-            "name": "_me",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "name": "asset",
             "type": "address"
           }
         ],
-        "name": "LogSomething",
-        "type": "event"
+        "name": "getSupplyBalance",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
       }
     ]
   }

@@ -27,6 +27,16 @@ function store (state, emitter) {
 
   app.renderer.resize(window.innerWidth, window.innerHeight);
   app.renderer.backgroundColor = 0xf8f94c;
+  app.renderer.plugins.interaction.on('pointerup', onClick)
+
+  function onClick (event) {
+    const coords = { x: event.data.global.x, y: event.data.global.y }
+    emitter.emit('canvasClick', coords)
+  }
+
+  emitter.on('canvasClick', async () => {
+
+  })
 
   //FILTERS
 
@@ -39,8 +49,8 @@ function store (state, emitter) {
       })
       state.kitties = kitties
     });
-    
-  
+
+
     // maps loaded kitties and adds them to Pixi Loader
     state.kitties.map((cat, i) => {
       loader.add(`cat${i}`, cat.img)
@@ -57,9 +67,12 @@ function store (state, emitter) {
       })
       //Create the cat sprite
       state.kitties.map((cat, i) => {
+        console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
-        catSprite.x = Math.random() * (window.innerWidth * 0.9)
-        catSprite.y = Math.random() * (window.innerHeight * 0.9)
+        catSprite.x = Math.abs(cat.x)
+        catSprite.y = Math.abs(cat.y)
+        catSprite.angle = cat.rot
+        console.log(catSprite)
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
         catSprite.filters = [kittyStroke, kittyShadow]
@@ -80,14 +93,19 @@ function store (state, emitter) {
       return
     }
     state.wallet = false
-
   })
+
 // GET YOUR WALLET IF YOU HAVE ONE
   emitter.on('getWallet', async function () {
     state.wallet = 'LOADING'
     state.creamAddress = await wallet.getWallet()
     state.wallet = true
+    emitter.emit('getCompoundBalance')
     emitter.emit('render')
+  })
+
+  emitter.on('getCompoundBalance', async () => {
+    state.supplyBalance = Number((await wallet.getCompoundBalance())).toFixed(2)
   })
 
 
