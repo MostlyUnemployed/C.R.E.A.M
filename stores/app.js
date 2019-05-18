@@ -68,26 +68,24 @@ function store (state, emitter) {
 // GET YOUR WALLET IF YOU HAVE ONE
   emitter.on('getWallet', async function () {
     state.wallet = 'LOADING'
-    console.log(state.wallet)
-    const creamWallet = await wallet.getWallet()
-    state.creamAddress = creamWallet
+    state.creamAddress = await wallet.getWallet()
     state.wallet = true
     emitter.emit('render')
-    console.log(state.wallet)
   })
- 
+
 
   // CREATE ONE IF YOU DONT
   emitter.on('createWallet', async function () {
     const isDeployed = await wallet.isDeployed()
     if (isDeployed) {
-      state.wallet = true
       console.error('Wallet already deployed')
+      emitter.emit('getWallet')
       return
     }
     const address = await wallet.deploy()
     state.creamAddress = address
     state.wallet = true
+    emitter.emit('getWallet')
   })
 
   // GET CREAM ADDRESS
@@ -108,15 +106,15 @@ function store (state, emitter) {
 
   emitter.on('navigate', () => {
     console.log(state.route)
-    setTimeout(function(){ 
+    setTimeout(function(){
       if (state.route === 'wall'){
         document.getElementById('canvas').appendChild(app.view);
       }
      }, 1000);
   })
-  
+
   emitter.on('DOMContentLoaded', () => {
-    setTimeout(function(){ 
+    setTimeout(function(){
       if (state.route === 'wall'){
         document.getElementById('canvas').appendChild(app.view);
       }

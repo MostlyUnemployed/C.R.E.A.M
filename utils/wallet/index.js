@@ -64,7 +64,9 @@ const funcs = {
     return kitties
   },
   getAllKittiesForOwner: async (addr) => {
-    const c = getCreamWallet()
+    const f = getFactoryContract()
+    const ca = await f.creams(addr)
+    const c = getCreamWallet(ca)
     const kittyCount = await c.getKittyCount()
     const kittyPromises = []
     for (let i = 0; i < kittyCount; i++) {
@@ -86,6 +88,8 @@ const funcs = {
         img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].toNumber()}.svg`
       })
     }
+
+    console.log(kitties)
 
     return kitties
   },
@@ -109,8 +113,9 @@ function getFactoryContract() {
   return new ethers.Contract(contracts.creamFactory.address, contracts.creamFactory.abi, signer)
 }
 
-function getCreamWallet() {
-  return new ethers.Contract(myCreamAddress, contracts.cream.abi, signer)
+function getCreamWallet(ca = myCreamAddress) {
+  console.log(ca)
+  return new ethers.Contract(ca, contracts.cream.abi, signer)
 }
 
 module.exports = funcs

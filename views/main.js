@@ -15,17 +15,14 @@ function view (state, emit) {
     background: #f8f94c;
   }
   `
-  console.log(state.wallet)
 
+  if (state.wallet) setTimeout(() => emit('pushState', '/wall'), 1000)
 
-    return html`
+  return html`
     <body>
-    <button onclick='${() => {
-      emit('createWallet')
-    }}'>CREATE A WALLET</button>
-    
-    <a href='/wall'>ROUTE TO WALL</a>
+      <button onclick='${() => {
+        emit('createWallet')
+      }}'>CREATE A WALLET</button>
     </body>
-    `
-
+  `
 }
