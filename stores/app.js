@@ -63,17 +63,20 @@ function store (state, emitter) {
 
   loadMyKitties()
 
-
   // CONNECT WALLET
   emitter.on('connectWallet', async function () {
     await wallet.connect()
+    emitter.emit('getWallet')
   })
 
   // CREATE WALLETS
   emitter.on('createWallet', async function () {
     const isDeployed = await wallet.isDeployed()
     state.isDeployed = isDeployed
-    if (isDeployed) return
+    if (isDeployed) {
+      console.error('Wallet already deployed')
+      return
+    }
     state.wallet = true
     emitter.emit('render')
     const address = await wallet.deploy()
@@ -84,12 +87,16 @@ function store (state, emitter) {
   emitter.on('getWallet', async function () {
     const creamWallet = await wallet.getWallet()
     state.creamAddress = creamWallet
+    console.log(state)
   })
 
   emitter.on('deposit', async function (kittyId, wei) {
     const tx = await wallet.deposit(kittyId, wei)
     console.log({ tx })
   })
+
+  emitter.emit('connectWallet')
+
 
 }
 
