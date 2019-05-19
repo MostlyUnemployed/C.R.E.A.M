@@ -122,11 +122,11 @@ function store (state, emitter) {
       //Create the cat sprite
       state.kitties.map((cat, i) => {
         let catSprite = new Sprite(resources[`cat${cat.id}`].texture);
-        catSprite.x = Math.abs(cat.x)
-        catSprite.y = Math.abs(cat.y)
         let sizeMultiplier = (cat.value / 0.01).toString().length
         catSprite.width = sizeMultiplier * 75
         catSprite.height = sizeMultiplier * 75
+        catSprite.x = Math.abs(cat.x)
+        catSprite.y = Math.abs(cat.y)
         catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
