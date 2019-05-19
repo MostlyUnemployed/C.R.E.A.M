@@ -9,10 +9,10 @@ module.exports = view
 function view (state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
 
- 
+
     let interval = setInterval(() => {
         console.log('trying')
-        if (state.myKitties) {
+        if (state.ids.length) {
             const elems = state.myKitties.map((cat) => {
                 if (state.ids.indexOf(cat.id) !== -1) return ``
                 return `<div class='catOption'><img src=${cat.image_url} /></div>`
@@ -28,7 +28,7 @@ function view (state, emit) {
                     // document.getElementsByTagName('body')[0].style.cursor = 'crosshair'
                 };
             }
-            // clearInterval(interval)
+            clearInterval(interval)
         }
     }, 2000)
 
@@ -57,20 +57,20 @@ function view (state, emit) {
     }
 
     const updateScaleValue = () => {
-    var slider = document.getElementById("scale");
-    var output = document.getElementById("scaleText");
-    output.innerHTML = `${slider.value}x Sticker Size`
-
-}
+        var slider = document.getElementById("scale");
+        var output = document.getElementById("scaleText");
+        output.innerHTML = `${slider.value}x Sticker Size`
+        emit('scale', slider.value)
+    }
         const withdrawMoney = () => {
             emit('withdrawCream')
         }
-        
+
 
     setInterval(() => document.getElementById('balance').innerText = `Interest Earned: ${state.supplyBalance || '0.00'}%`)
 
     const wallStyles = css`
-    
+
     canvas {
         margin: 0;
         padding: 0;
@@ -104,7 +104,7 @@ function view (state, emit) {
 
     #container {
         margin-top: -2px;
-        height: 10rem;   
+        height: 10rem;
         background: url('../assets/moneypattern.png'), lightgreen;
         background-blend-mode: soft-light;
         width: 100%;
@@ -154,7 +154,7 @@ function view (state, emit) {
         border-bottom: 1px solid black;
         transition: .1s all ease-in-out;
       }
-    
+
       #withdraw:hover {
         padding: 8px;
         padding-left: 7px;
@@ -163,7 +163,7 @@ function view (state, emit) {
         border-right: 2px solid black;
         border-bottom: 4px solid black;
       }
-    
+
       #withdraw:active {
         padding: 8px;
         padding-left: 7px;
@@ -193,7 +193,7 @@ function view (state, emit) {
             </div>
             <div class='ui flex flex-column items-center justify-between'>
                 <p id='scaleText'>1x Sticker Size</p>
-                <input oninput=${() => updateScaleValue()} type="range" min="0" max="5.00" value="0" class="slider" id="scale">
+                <input oninput=${() => updateScaleValue()} type="range" min="1" max="5.00" value="1" class="slider" id="scale">
             </div>
             <div class='ui flex flex-column items-center justify-around'>
                 <p id='balance'>Balance</p>

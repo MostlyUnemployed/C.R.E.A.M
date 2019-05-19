@@ -63,13 +63,17 @@ function store (state, emitter) {
       const n = (state.activeKitty.lastIndexOf('/'))
       let kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
     }
-    emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, '0.01')
+    if (kittyId === -1) return
+    const eth = state.scale ? (0.01 * Math.pow(10, state.scale - 1)) : 0.01
+    console.log({eth})
+    emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, eth.toString())
     state.activeKitty = null
   })
 
   function getNextKitty() {
     const kittiesCanStick = removeAlreadyStuck(state.myKitties)
-    return kittiesCanStick[0].id
+    if (kittiesCanStick[0]) return kittiesCanStick[0].id
+    return -1
   }
 
   function removeAlreadyStuck(kitties) {
@@ -179,6 +183,10 @@ function store (state, emitter) {
     state.rotated = degrees
   })
 
+  emitter.on('scale', async (factor) => {
+    state.scale = factor
+  })
+
   // GET CREAM ADDRESS
   emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
     console.log({ kittyId, x, y, rot, eth })
@@ -230,7 +238,7 @@ function store (state, emitter) {
         const canvas = document.getElementsByTagName('canvas')[0]
         // canvas.style.removeProperty('cursor')
         canvasContainer.style.setProperty('cursor', 'url(/assets/cursor.png) 32 32, auto;')
-        console.log(canvasContainer.style.getProperty('cursor'))
+        // console.log(canvasContainer.style.getProperty('cursor'))
         // console.log(canvasContainer)
         // console.log(canvasContainer.style)
         // console.log("style removed")
