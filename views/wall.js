@@ -11,15 +11,14 @@ function view (state, emit) {
 
   const sidebarStyles = css`
     :host {
-        width: 12rem;
-        height: 60vh;
+        width: 16rem;
+        height: 100vh;
         max-height: 800px;
         position: fixed;
-        top: 20vh;
         right: 0;
         background: whitesmoke;
         transition: right 1s ease-in-out;
-        overflow: scroll;
+        overflow: hidden;
         border: 3px dashed black;
         border-right: none;
     }
@@ -64,7 +63,7 @@ function view (state, emit) {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        height: auto;   
+        height: fit-content;  
     }
 
     .rolledOut {
@@ -144,19 +143,46 @@ function view (state, emit) {
     sidebar.classList.remove("rolledIn");
   }
 
+  const updateRotationValue = () => {
+    var slider = document.getElementById("rotation");
+    var output = document.getElementById("rotationText");
+        output.innerHTML = `${slider.value}° Degrees`
+    }
+
+    const updateScaleValue = () => {
+    var slider = document.getElementById("scale");
+    var output = document.getElementById("scaleText");
+        output.innerHTML = `${slider.value}x Scale`
+
+    }
+
+
     return html`
     <body>
     <div class='balance'>My Cream: <span id='balance'></span>💦</div>
     <button class='withdraw flex items-center justify-center'>Lick 👅</button>
+    
     <section id='sidebar' class='${sidebarStyles}'>
         <button onclick='${() => toggleSideBar()}'>${'>>'}</button>
+        <div>
+            <h1>Choose a kitty to MILK</h1>
+            <p>Rotate, Scale & Stick your little Milk Machine</p>
+            <div class="slidecontainer flex-column items-center">
+                <p id='rotationText'>0° Degrees</p>
+                <input oninput=${() => updateRotationValue()} type="range" min="0" max="360" value="0" class="slider" id="rotation">
+                <a>Rotate your kitty however you like!</a>
+                <p id='scaleText'>1x Scale</p>
+                <input oninput=${() => updateScaleValue()} type="range" min="0" max="5.00" value="0" class="slider" id="scale">
+                <a>The larger you scale your kitty, the more it costs</a>
+            </div>
+        </div>
         <div id='container'>
             <div id='myCatsList'>
             
             </div>
         </div>
-    
     </section>
+
     <div id='canvas'></div>
     </body>
     `
