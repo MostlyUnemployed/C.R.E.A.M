@@ -12,7 +12,7 @@ function view (state, emit) {
   state.reloadWall = () => {
     let interval = setInterval(() => {
         console.log('trying')
-        if (state.ids.length) {
+        if (state.ids.length && state.myKitties.length) {
             const elems = state.myKitties.map((cat) => {
                 if (state.ids.indexOf(cat.id) !== -1) return ``
                 return `<div class='catOption'><img src=${cat.image_url} /></div>`
