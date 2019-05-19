@@ -139,6 +139,7 @@ function store (state, emitter) {
   emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
     console.log({ kittyId, x, y, rot, eth })
     const tx = await wallet.deposit(kittyId, x, y, rot, eth)
+    emitter.emit('getAllKitties')
     console.log({ tx })
   })
 
