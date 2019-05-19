@@ -2,7 +2,7 @@ var html = require('choo/html')
 var raw = require('choo/html/raw')
 var css = require('sheetify')
 
-var TITLE = 'sticker-interest - main'
+var TITLE = 'Meow'
 
 module.exports = view
 
