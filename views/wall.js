@@ -124,6 +124,8 @@ function view (state, emit) {
             for (let catElem of catElems) {
                 catElem.onclick = function() {
                     state.activeKitty = (catElem.children[0].getAttribute('src'))
+                    console.log(document.getElementsByTagName('body'))
+                    document.getElementsByTagName('body')[0].style.cursor = state.activeKitty
                 };
             }
             clearInterval(interval)
@@ -145,18 +147,28 @@ function view (state, emit) {
     sidebar.classList.remove("rolledIn");
   }
 
-  const updateRotationValue = () => {
-    var slider = document.getElementById("rotation");
-    var output = document.getElementById("rotationText");
+    const updateRotationValue = () => {
+        var slider = document.getElementById("rotation");
+        var output = document.getElementById("rotationText");
         output.innerHTML = `${slider.value}° Degrees`
+        const els = document.getElementsByClassName('catOption')
+        for (let el of els) {
+            emit('rotate', slider.value)
+            el.style.transform = `rotateZ(${slider.value}deg)`
+        }
     }
 
     const updateScaleValue = () => {
-    var slider = document.getElementById("scale");
-    var output = document.getElementById("scaleText");
-    output.innerHTML = `${slider.value}x Scale`
+        var slider = document.getElementById("scale");
+        var output = document.getElementById("scaleText");
+        output.innerHTML = `${slider.value}x Scale`
+        const els = document.getElementsByClassName('catOption')
+        for (let el of els) {
 
-}
+            el.style.transform = `scale(${slider.value})`
+        }
+
+    }
 
     setInterval(() => document.getElementById('balance').innerText = state.supplyBalance || '0.00', 500)
 

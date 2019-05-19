@@ -27,19 +27,40 @@ function store (state, emitter) {
   });
 
   // app.renderer.resize(window.innerWidth, window.innerHeight);
+  app.stage.interactive = true
   app.renderer.backgroundColor = 0xf8f94c;
   app.renderer.plugins.interaction.on('pointerup', onClick)
+  app.renderer.plugins.interaction.on('pointermove', event => {
+
+    if (!state.activeKitty) return
+    const coords = { x: event.data.global.x, y: event.data.global.y }
+    const n = (state.activeKitty.lastIndexOf('/'))
+    const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
+    if (!resources[`cat${kittyId}`]) loader.add(`cat${kittyId}`, state.activeKitty)
+    let catSprite = new Sprite(resources[`cat${kittyId}`].texture)
+    catSprite.x = Math.abs(coords.x)
+    catSprite.y = Math.abs(coords.y)
+    catSprite.width = 200
+    catSprite.height = 200
+    catSprite.angle = state.rotated
+    app.stage.addChild(catSprite)
+    console.log({catSprite})
+    app.renderer.render(app.stage)
+
+  })
 
   function onClick (event) {
     const coords = { x: event.data.global.x, y: event.data.global.y }
     emitter.emit('canvasClick', coords)
   }
 
+
   emitter.on('canvasClick', async (coords) => {
     if (state.activeKitty) {
       const n = (state.activeKitty.lastIndexOf('/'))
       const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
-      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), Math.floor((Math.random() * 360)), '0.01')
+      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, '0.01')
+      state.activeKitty = null
     }
   })
 
@@ -83,7 +104,7 @@ function store (state, emitter) {
         catSprite.y = Math.abs(cat.y)
         catSprite.width = 200
         catSprite.height = 200
-        // catSprite.angle = cat.rot
+        catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
         // catSprite.filters = [kittyStroke, kittyShadow]
@@ -135,11 +156,16 @@ function store (state, emitter) {
     emitter.emit('getWallet')
   })
 
+  emitter.on('rotate', async (degrees) => {
+    state.rotated = degrees
+  })
+
   // GET CREAM ADDRESS
   emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
     console.log({ kittyId, x, y, rot, eth })
     const tx = await wallet.deposit(kittyId, x, y, rot, eth)
     emitter.emit('getAllKitties')
+    emitter.emit('getCompoundBalance')
     console.log({ tx })
   })
 

@@ -100,7 +100,7 @@ const funcs = {
     }
     return kitties
   },
-  deposit: async (kittyId, x, y, rot, eth) => {
+  deposit: async (kittyId, x, y, rot = 0, eth) => {
     const c = getCreamWallet()
     console.log(kittyId)
     console.log(c)
