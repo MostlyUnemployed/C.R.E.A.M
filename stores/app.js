@@ -19,8 +19,8 @@ function store (state, emitter) {
   const Sprite = PIXI.Sprite
   //Create a Pixi Application
   let app = new Application({
-    width: 640,
-    height: 480,
+    width: 2000,
+    height: 2000,
     antialias: true,
     transparent: false,
     resolution: 1
