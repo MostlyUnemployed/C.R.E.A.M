@@ -19,15 +19,15 @@ function store (state, emitter) {
   const Sprite = PIXI.Sprite
   //Create a Pixi Application
   let app = new Application({
-    width: 2000,
-    height: 2000,
+    width: 640,
+    height: 360,
     antialias: true,
-    transparent: false,
+    transparent: true,
     resolution: 1
   });
 
   // app.renderer.resize(window.innerWidth, window.innerHeight);
-  app.renderer.backgroundColor = 0xf8f94c;
+  app.renderer.backgroundColor = 0xffffff00;
   app.renderer.plugins.interaction.on('pointerup', onClick)
 
   function onClick (event) {
@@ -64,29 +64,34 @@ function store (state, emitter) {
     // maps loaded kitties and adds them to Pixi Loader
     state.kitties.map((cat, i) => {
       loader.add(`cat${i}`, cat.img)
+      if (!resources['backgroundImage']) {
+         loader.add('backgroundImage',  '../assets/space.gif')
+      }
     })
 
     function setup() {
 
-      const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
-      const kittyShadow = new DropShadowFilter({
-        distance: 0.1,
-        color: 0x000000,
-        alpha: 0.1,
-        blur: 1
-      })
+      // const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
+      // const kittyShadow = new DropShadowFilter({
+      //   distance: 0.1,
+      //   color: 0x000000,
+      //   alpha: 0.1,
+      //   blur: 1
+      // })
       //Create the cat sprite
       console.log(state.kitties)
+
       state.kitties.map((cat, i) => {
         console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
-        catSprite.width = 200
-        catSprite.height = 200
-        // catSprite.angle = cat.rot
+        catSprite.width = 40
+        catSprite.height = 40
+        catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
+
         // catSprite.filters = [kittyStroke, kittyShadow]
       })
     }
@@ -94,7 +99,6 @@ function store (state, emitter) {
     loader.load(setup);
   })
 
-  console.log(Application)
   // CONNECT METAMASK AND CHECK FOR CREAM WALLET
   emitter.on('connectWallet', async function () {
     await wallet.connect()
@@ -173,7 +177,7 @@ function store (state, emitter) {
     console.log(state.route)
     setTimeout(function(){
       if (state.route === 'wall'){
-        document.getElementById('canvas').appendChild(app.view);
+        document.getElementById('canvas').replaceWith(app.view);
       }
      }, 1000);
   })
@@ -183,7 +187,7 @@ function store (state, emitter) {
 
     setTimeout(function(){
       if (state.route === 'wall'){
-        document.getElementById('canvas').appendChild(app.view);
+        document.getElementById('canvas').replaceWith(app.view);
       }
      }, 1000);
   })

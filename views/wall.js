@@ -9,109 +9,9 @@ module.exports = view
 function view (state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
 
-  const sidebarStyles = css`
-    :host {
-        width: 18rem;
-        height: 100vh;
-        max-height: 800px;
-        position: fixed;
-        right: 0;
-        background: whitesmoke;
-        transition: right 1s ease-in-out;
-        overflow: hidden;
-        border-left: 3px dashed black;
-    }
-
-    :host button {
-        position: relative;
-        top: 0;
-        left: -2rem;
-        background: none;
-        border: none;
-        font-size: 2rem;
-        font-weight: bold;
-    }
-
-    :host #container {
-        width: 100%;
-        max-height: 100vh;
-        overflow: scroll;
-        direction: rtl;
-    }
-
-    .catOption {
-        position: relative;
-        z-index: 1;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .catOption:hover img {
-        transform: scale(1.4);
-    }
-
-    .catOption img {
-        width: 80%;
-        transform: scale(1);
-        transition: transform .5s ease-in-out ;
-    }
-
-    #myCatsList {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        height: auto;
-    }
-
-    .rolledOut {
-        right: -20rem;
-    }
-
-    .rolledIn {
-        right: 0;
-    }
-
-    .balance {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        font-size: 4rem;
-        font-family: 'Baloo';
-        background: -webkit-linear-gradient(0deg, #FF00A8, #00E0FF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Safari */
-        -khtml-user-select: none; /* Konqueror HTML */
-          -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-                user-select: none; /* Non-prefixed version, currently
-                                      supported by Chrome and Opera */
-      }
-      .withdraw {
-        position: absolute;
-        top: 100px;
-        left: 10px;
-        font-size: 2rem;
-        font-family: 'Baloo';
-        background: #F08CA5;
-        border-radius: 50px;
-        border: none;
-        cursor: pointer;
-        padding: 15px 20px;
-      }
-      .withdraw:active,
-      .withdraw:focus {
-        outline: none;
-      }
-
-      
-  `
-
-
+ 
     let interval = setInterval(() => {
+        console.log('trying')
         if (state.myKitties) {
             const elems = state.myKitties.map((cat) => {
                 if (state.ids.indexOf(cat.id) !== -1) return ``
@@ -154,41 +54,118 @@ function view (state, emit) {
     const updateScaleValue = () => {
     var slider = document.getElementById("scale");
     var output = document.getElementById("scaleText");
-    output.innerHTML = `${slider.value}x Scale`
-    
-}
+    output.innerHTML = `${slider.value}x Sticker Size`
 
-    setInterval(() => document.getElementById('balance').innerText = state.supplyBalance || '0.00', 500)
+}
+        const withdrawMoney = () => {
+            emit('withdrawCream')
+        }
+        
+
+    setInterval(() => document.getElementById('balance').innerText = `Interest Earned: ${state.supplyBalance || '0.00'}%`)
+
+    const wallStyles = css`
+    
+    canvas {
+        margin: 0;
+        padding: 0;
+        box-shadow: .2rem .2rem .2rem #00000010;
+        border: 2px dashed black;
+        border-bottom: none;
+        box-sizing: border-box;
+    }
+
+    :host {
+        background: url('../assets/graph.png'), #f8f94c;
+        background-blend-mode: multiply;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+
+    :host h1 {
+
+    }
+
+    :host section {
+        min-width: 640px;
+        background: whitesmoke;
+        box-shadow: .2rem .5rem .5rem #00000020;
+        border: 2px dashed black;
+        border-top: none;
+        border-bottom: none;
+        z-index: 1;
+    }
+
+    #container {
+        margin-top: -2px;
+        height: 10rem;   
+        background: url('../assets/moneypattern.png'), lightgreen;
+        background-blend-mode: soft-light;
+        width: 100%;
+        content: '';
+        z-index: 0;
+        border-top: 2px dashed black;
+    }
+
+    #myCatsList {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .catOption {
+        width: 140px;
+    }
+
+    #canvasBackground {
+        background: whitesmoke;
+    }
+
+    #textArea {
+        max-width: 640px;
+
+    }
+
+    .slider {
+        width: 25%;
+    }
+
+    `
 
     return html`
-    <body>
-    <div id='cream'>
-        <div class='balance'>My Cream: <span id='balance'></span>💦</div>
-        <button class='withdraw flex items-center justify-center'>Lick 👅</button>
-    </div>
-    
-    <section id='sidebar' class='${sidebarStyles}'>
-        <button onclick='${() => toggleSideBar()}'>${'>>'}</button>
-        <div class='pa1'>
-            <h1>Choose a kitty to MILK</h1>
-            <p>Rotate, Scale & Stick your little Milk Machine</p>
-            <div class="slidecontainer flex-column items-center">
+    <body class='${wallStyles + ' flex flex-column items-center justify-end'}'>
+        <div id='textArea'>
+            <h1>Earn 12% with a Feline Term Deposit</h1>
+            <p>Select a Cryptokitty, choose it's rotation and scale, then place it into the Regulatory Sandbox® to start earning interest and growing your wealth. It's time to have the life you've always dreamed of.</p>
+        </div>
+        <div id='canvasBackground'>
+            <div id='canvas'></div>
+        </div>
+        <section class='flex justify-around'>
+            <div class='ui flex-column align-start justify-between'>
                 <p id='rotationText'>0° Degrees</p>
                 <input oninput=${() => updateRotationValue()} type="range" min="0" max="360" value="0" class="slider" id="rotation">
-                <a>Rotate your kitty however you like!</a>
-                <p id='scaleText'>1x Scale</p>
+            </div>
+            <div class='ui flex-column align-start justify-between'>
+                <p id='scaleText'>1x Sticker Size</p>
                 <input oninput=${() => updateScaleValue()} type="range" min="0" max="5.00" value="0" class="slider" id="scale">
-                <a>The larger you scale your kitty, the more it costs</a>
             </div>
-        </div>
+            <div class='ui flex-column align-start justify-between'>
+                <p id='balance'>Balance</p>
+                <button onclick=${() => withdrawMoney()}>Close FTD</button>
+            </div>
+        </section>
         <div id='container'>
-            <div id='myCatsList'>
-            
-            </div>
+            <h3>Choose a CryptoKitty</h3>
+            <div id='myCatsList'></div>
         </div>
-    </section>
-
-    <div id='canvas'></div>
     </body>
     `
 }
+
+{/* <div id='cream'>
+<div class='balance'>My Cream: <span </span>💦</div>
+<button class='withdraw flex items-center justify-center'>Lick 👅</button>
+</div> */}
