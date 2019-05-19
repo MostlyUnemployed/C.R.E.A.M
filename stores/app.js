@@ -14,7 +14,7 @@ function store (state, emitter) {
   const ckUtils = require('../utils/kittys')
   //Defining Pixi Aliases
   const Application = PIXI.Application
-  const loader = PIXI.Loader.shared
+  let loader = PIXI.Loader.shared
   const resources = PIXI.Loader.shared.resources
   const Sprite = PIXI.Sprite
   //Create a Pixi Application
@@ -26,8 +26,29 @@ function store (state, emitter) {
     resolution: 1
   });
 
-  // app.renderer.resize(window.innerWidth, window.innerHeight);
-  app.renderer.backgroundColor = 0xffffff00;
+  app.stage.interactive = true;
+  app.stage.hitArea = new PIXI.Rectangle(0, 0, 2000, 2000);
+  app.stage.defaultCursor = "url(/assets/cursor.png) 32 32, auto;";
+  app.stage.cursor = "url(/assets/cursor.png) 32 32, auto;";
+
+
+  // CURSOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   app.renderer.plugins.interaction.on('pointerup', onClick)
 
   function onClick (event) {
@@ -35,20 +56,20 @@ function store (state, emitter) {
     emitter.emit('canvasClick', coords)
   }
 
+
   emitter.on('canvasClick', async (coords) => {
     if (state.activeKitty) {
-      console.log('YEAH WE HAVE A CAT')
-      console.log(state.activeKitty)
       const n = (state.activeKitty.lastIndexOf('/'))
       const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
-      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), Math.floor((Math.random() * 360)), '0.01')
+      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, '0.01')
+      state.activeKitty = null
     }
   })
 
   //FILTERS
 
   emitter.on('KittiesLoaded', function () {
-    // app.stage.removeChildren()
+    app.stage.removeChildren()
     console.log('SHOULD HAVE REMOVED ALL CHILDREN')
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
@@ -62,15 +83,14 @@ function store (state, emitter) {
 
 
     // maps loaded kitties and adds them to Pixi Loader
-    state.kitties.map((cat, i) => {
-      loader.add(`cat${i}`, cat.img)
-      if (!resources['backgroundImage']) {
-         loader.add('backgroundImage',  '../assets/space.gif')
-      }
+    // loader.reset()
+    // loader = PIXI.Loader.shared
+    state.kitties.map((cat) => {
+      if (resources[`cat${cat.id}`]) return
+      loader.add(`cat${cat.id}`, cat.img)
     })
 
     function setup() {
-
       // const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
       // const kittyShadow = new DropShadowFilter({
       //   distance: 0.1,
@@ -79,15 +99,13 @@ function store (state, emitter) {
       //   blur: 1
       // })
       //Create the cat sprite
-      console.log(state.kitties)
-
       state.kitties.map((cat, i) => {
-        console.log({cat})
-        let catSprite = new Sprite(resources['cat' + i].texture);
+        console.log(resources)
+        let catSprite = new Sprite(resources[`cat${cat.id}`].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
-        catSprite.width = 40
-        catSprite.height = 40
+        catSprite.width = 75
+        catSprite.height = 75
         catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
@@ -141,11 +159,16 @@ function store (state, emitter) {
     emitter.emit('getWallet')
   })
 
+  emitter.on('rotate', async (degrees) => {
+    state.rotated = degrees
+  })
+
   // GET CREAM ADDRESS
   emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
     console.log({ kittyId, x, y, rot, eth })
     const tx = await wallet.deposit(kittyId, x, y, rot, eth)
     emitter.emit('getAllKitties')
+    emitter.emit('getCompoundBalance')
     console.log({ tx })
   })
 
@@ -187,7 +210,15 @@ function store (state, emitter) {
 
     setTimeout(function(){
       if (state.route === 'wall'){
-        document.getElementById('canvas').replaceWith(app.view);
+        const canvasContainer = document.getElementById('canvas')
+        canvasContainer.replaceWith(app.view)
+        const canvas = document.getElementsByTagName('canvas')[0]
+        // canvas.style.removeProperty('cursor')
+        canvasContainer.style.setProperty('cursor', 'url(/assets/cursor.png) 32 32, auto;')
+        console.log(canvasContainer.style.getProperty('cursor'))
+        // console.log(canvasContainer)
+        // console.log(canvasContainer.style)
+        // console.log("style removed")
       }
      }, 1000);
   })

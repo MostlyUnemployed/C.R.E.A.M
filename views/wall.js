@@ -24,6 +24,8 @@ function view (state, emit) {
             for (let catElem of catElems) {
                 catElem.onclick = function() {
                     state.activeKitty = (catElem.children[0].getAttribute('src'))
+                    console.log(document.getElementsByTagName('body'))
+                    // document.getElementsByTagName('body')[0].style.cursor = 'crosshair'
                 };
             }
             clearInterval(interval)
@@ -45,10 +47,15 @@ function view (state, emit) {
     sidebar.classList.remove("rolledIn");
   }
 
-  const updateRotationValue = () => {
-    var slider = document.getElementById("rotation");
-    var output = document.getElementById("rotationText");
+    const updateRotationValue = () => {
+        var slider = document.getElementById("rotation");
+        var output = document.getElementById("rotationText");
         output.innerHTML = `${slider.value}° Degrees`
+        const els = document.getElementsByClassName('catOption')
+        for (let el of els) {
+            emit('rotate', slider.value)
+            el.style.transform = `rotateZ(${slider.value}deg)`
+        }
     }
 
     const updateScaleValue = () => {
@@ -108,6 +115,14 @@ function view (state, emit) {
         border-top: 2px dashed black;
     }
 
+    .ui p {
+        margin: 5px;
+    }
+
+    .ui {
+        padding: 5px;
+    }
+
     #myCatsList {
         height: 100%;
         display: flex;
@@ -132,6 +147,36 @@ function view (state, emit) {
         width: 25%;
     }
 
+    #withdraw {
+        outline: none;
+        width: 80%;
+        padding: 8px;
+        border: 1px solid #00000010;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        transition: .1s all ease-in-out;
+      }
+    
+      #withdraw:hover {
+        padding: 8px;
+        padding-left: 7px;
+        padding-top: 5px;
+        border: 1px solid #00000030;
+        border-right: 2px solid black;
+        border-bottom: 4px solid black;
+      }
+    
+      #withdraw:active {
+        padding: 8px;
+        padding-left: 7px;
+        padding-bottom: 5px;
+        outline: none;
+        border: 1px solid black;
+        border-left: 2px solid black;
+        border-top: 4px solid black;
+        box-shadow: 1px 1px 3px #00000040;
+      }
+
     `
 
     return html`
@@ -144,21 +189,20 @@ function view (state, emit) {
             <div id='canvas'></div>
         </div>
         <section class='flex justify-around'>
-            <div class='ui flex-column align-start justify-between'>
+            <div class='ui flex flex-column items-center justify-between'>
                 <p id='rotationText'>0° Degrees</p>
                 <input oninput=${() => updateRotationValue()} type="range" min="0" max="360" value="0" class="slider" id="rotation">
             </div>
-            <div class='ui flex-column align-start justify-between'>
+            <div class='ui flex flex-column items-center justify-between'>
                 <p id='scaleText'>1x Sticker Size</p>
                 <input oninput=${() => updateScaleValue()} type="range" min="0" max="5.00" value="0" class="slider" id="scale">
             </div>
-            <div class='ui flex-column align-start justify-between'>
+            <div class='ui flex flex-column items-center justify-around'>
                 <p id='balance'>Balance</p>
-                <button onclick=${() => withdrawMoney()}>Close FTD</button>
+                <button id='withdraw' onclick=${() => withdrawMoney()}>Withdraw 💵</button>
             </div>
         </section>
         <div id='container'>
-            <h3>Choose a CryptoKitty</h3>
             <div id='myCatsList'></div>
         </div>
     </body>
@@ -169,3 +213,14 @@ function view (state, emit) {
 <div class='balance'>My Cream: <span </span>💦</div>
 <button class='withdraw flex items-center justify-center'>Lick 👅</button>
 </div> */}
+
+// var slider = document.getElementById("scale");
+// var output = document.getElementById("scaleText");
+// output.innerHTML = `${slider.value}x Scale`
+// const els = document.getElementsByClassName('catOption')
+// for (let el of els) {
+
+//     el.style.transform = `scale(${slider.value})`
+// }
+
+// }

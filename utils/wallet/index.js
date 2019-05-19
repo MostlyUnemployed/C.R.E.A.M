@@ -44,14 +44,11 @@ const funcs = {
   },
   deploy: async () => {
     const f = getFactoryContract()
-    console.log(f)
-    const n = assist.notify('pending', `Confirming age...`, -1)
+    const n = assist.notify('pending', `Confirming age...`, 1000)
     const tx = await f.deployCream()
-    console.log(tx)
     await tx.wait()
     n()
     assist.notify('success', `Definitely over 18`)
-    console.log(tx)
     myCreamAddress = await f.creams(myAddress)
     console.log(myCreamAddress)
     return myCreamAddress
@@ -65,7 +62,6 @@ const funcs = {
       users.push(f.users(i))
     }
     const u = await Promise.all(users)
-    console.log({u: u})
     return u
   },
   getAllKitties: async () => {
@@ -86,16 +82,11 @@ const funcs = {
       kittyPromises.push(c.kitties(i))
     }
     const kittyIds = await Promise.all(kittyPromises)
-
-    console.log(kittyIds)
-
     const fatcatPromises = []
     for (let kit of kittyIds) {
       fatcatPromises.push(c.fatcats(kit.id))
     }
-
     const fatcats = await Promise.all(fatcatPromises)
-
     const kitties = []
     for (let i = 0; i < kittyIds.length; i++) {
       kitties.push({
@@ -107,22 +98,19 @@ const funcs = {
         rot: kittyIds[i].rot.toNumber()
       })
     }
-
     return kitties
   },
-  deposit: async (kittyId, x, y, rot, eth) => {
+  deposit: async (kittyId, x, y, rot = 0, eth) => {
     const c = getCreamWallet()
     console.log(kittyId)
     console.log(c)
-    const n = assist.notify('pending', `Placing kitty sticker`, -1)
+    const n = assist.notify('pending', `Placing kitty sticker`, 10000)
     const tx = await c.meow(kittyId, x, y, rot, {
       value: ethers.utils.parseEther(eth)
     })
-    console.log(tx)
     await tx.wait()
     n()
     assist.notify('success', `Stuck!`)
-    console.log(tx)
     return tx
     // now we have deposited, we can print the cat or somehting
   },
@@ -137,13 +125,11 @@ const funcs = {
   withdrawAll: async () => {
     const c = getCreamWallet()
     const bal = await funcs.getCompoundBalance()
-    const n = assist.notify('pending', `Withdrawing ${ethers.utils.formatEther(bal)} ETH`, -1)
+    const n = assist.notify('pending', `Withdrawing ~${Number(bal).toFixed(2)} ETH`, 10000)
     const tx = await c.lick(ethers.utils.parseEther(bal))
-    console.log({ tx })
     await tx.wait()
     n()
     assist.notify('success', `Withdrawal successful`)
-    console.log({ tx })
     return tx
   }
 }
