@@ -1,6 +1,6 @@
 module.exports = {
   creamFactory: {
-    address: '0x614613b8434c019ac8534b85365d8e09b963bdc5',
+    address: '0x7ff0a6b9a2c52649407fc7f3915360ea534cbb8d',
     abi: [
       {
         "constant": false,

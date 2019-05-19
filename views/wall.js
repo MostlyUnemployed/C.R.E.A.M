@@ -11,7 +11,7 @@ function view (state, emit) {
 
   const sidebarStyles = css`
     :host {
-        width: 16rem;
+        width: 18rem;
         height: 100vh;
         max-height: 800px;
         position: fixed;
@@ -19,8 +19,7 @@ function view (state, emit) {
         background: whitesmoke;
         transition: right 1s ease-in-out;
         overflow: hidden;
-        border: 3px dashed black;
-        border-right: none;
+        border-left: 3px dashed black;
     }
 
     :host button {
@@ -46,7 +45,7 @@ function view (state, emit) {
         box-sizing: border-box;
         display: flex;
         justify-content: center;
-        align-items: center;    
+        align-items: center;
     }
 
     .catOption:hover img {
@@ -63,7 +62,7 @@ function view (state, emit) {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        height: fit-content;  
+        height: auto;
     }
 
     .rolledOut {
@@ -107,6 +106,8 @@ function view (state, emit) {
       .withdraw:focus {
         outline: none;
       }
+
+      
   `
 
 
@@ -120,7 +121,7 @@ function view (state, emit) {
             document.getElementById('myCatsList').innerHTML = elemString
             let catElems = document.getElementsByClassName('catOption')
             for (let catElem of catElems) {
-                catElem.onclick = function() { 
+                catElem.onclick = function() {
                     state.activeKitty = (catElem.children[0].getAttribute('src'))
                 };
             }
@@ -129,7 +130,7 @@ function view (state, emit) {
 
 
     }, 2000)
-    
+
 
     const toggleSideBar = ()  => {
     let sidebar = document.getElementById('sidebar')
@@ -152,19 +153,22 @@ function view (state, emit) {
     const updateScaleValue = () => {
     var slider = document.getElementById("scale");
     var output = document.getElementById("scaleText");
-        output.innerHTML = `${slider.value}x Scale`
+    output.innerHTML = `${slider.value}x Scale`
+    
+}
 
-    }
-
+    setInterval(() => document.getElementById('balance').innerText = state.supplyBalance || '0.00', 500)
 
     return html`
     <body>
-    <div class='balance'>My Cream: <span id='balance'></span>💦</div>
-    <button class='withdraw flex items-center justify-center'>Lick 👅</button>
+    <div id='cream'>
+        <div class='balance'>My Cream: <span id='balance'></span>💦</div>
+        <button class='withdraw flex items-center justify-center'>Lick 👅</button>
+    </div>
     
     <section id='sidebar' class='${sidebarStyles}'>
         <button onclick='${() => toggleSideBar()}'>${'>>'}</button>
-        <div>
+        <div class='pa1'>
             <h1>Choose a kitty to MILK</h1>
             <p>Rotate, Scale & Stick your little Milk Machine</p>
             <div class="slidecontainer flex-column items-center">
@@ -186,5 +190,4 @@ function view (state, emit) {
     <div id='canvas'></div>
     </body>
     `
-
 }

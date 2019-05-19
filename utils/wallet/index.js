@@ -91,7 +91,7 @@ const funcs = {
       kitties.push({
         id: kittyIds[i].id.toNumber(),
         value: ethers.utils.formatEther(fatcats[i]),
-        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].id.toNumber()}.svg`,
+        img: `https://img.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].id.toNumber()}.png`,
         x: kittyIds[i].x.toNumber(),
         y: kittyIds[i].y.toNumber(),
         rot: kittyIds[i].rot.toNumber()
@@ -100,13 +100,12 @@ const funcs = {
 
     return kitties
   },
-  deposit: async (kittyId, wei) => {
+  deposit: async (kittyId, x, y, rot, eth) => {
     const c = getCreamWallet()
     console.log(kittyId)
-    console.log(wei)
     console.log(c)
-    const tx = await c.meow(kittyId, {
-      value: ethers.utils.parseEther('0.01')
+    const tx = await c.meow(kittyId, x, y, rot, {
+      value: ethers.utils.parseEther(eth)
     })
     console.log(tx)
     await tx.wait()
@@ -121,6 +120,15 @@ const funcs = {
     const compound = new ethers.Contract(contracts.compound.address, contracts.compound.abi, signer)
     const bal = await compound.getSupplyBalance(a, wethAddress)
     return ethers.utils.formatEther(bal)
+  },
+  withdrawAll: async () => {
+    const c = getCreamWallet()
+    const bal = await funcs.getCompoundBalance()
+    const tx = await c.lick(ethers.utils.parseEther(bal))
+    console.log({ tx })
+    await tx.wait()
+    console.log({ tx })
+    return tx
   }
 }
 

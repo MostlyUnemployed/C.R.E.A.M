@@ -18,14 +18,14 @@ function store (state, emitter) {
   const Sprite = PIXI.Sprite
   //Create a Pixi Application
   let app = new Application({
-    width: 256,
-    height: 256,
+    width: 640,
+    height: 480,
     antialias: true,
     transparent: false,
     resolution: 1
   });
 
-  app.renderer.resize(window.innerWidth, window.innerHeight);
+  // app.renderer.resize(window.innerWidth, window.innerHeight);
   app.renderer.backgroundColor = 0xf8f94c;
   app.renderer.plugins.interaction.on('pointerup', onClick)
 
@@ -34,13 +34,21 @@ function store (state, emitter) {
     emitter.emit('canvasClick', coords)
   }
 
-  emitter.on('canvasClick', async () => {
-
+  emitter.on('canvasClick', async (coords) => {
+    if (state.activeKitty) {
+      console.log('YEAH WE HAVE A CAT')
+      console.log(state.activeKitty)
+      const n = (state.activeKitty.lastIndexOf('/'))
+      const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
+      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), Math.floor((Math.random() * 360)), '0.01')
+    }
   })
 
   //FILTERS
 
   emitter.on('KittiesLoaded', function () {
+    // app.stage.removeChildren()
+    console.log('SHOULD HAVE REMOVED ALL CHILDREN')
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
     userAddresses.map(function(key) {
@@ -66,22 +74,25 @@ function store (state, emitter) {
         blur: 1
       })
       //Create the cat sprite
+      console.log(state.kitties)
       state.kitties.map((cat, i) => {
         console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
-        catSprite.angle = cat.rot
-        console.log(catSprite)
+        catSprite.width = 200
+        catSprite.height = 200
+        // catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
-        catSprite.filters = [kittyStroke, kittyShadow]
+        // catSprite.filters = [kittyStroke, kittyShadow]
       })
     }
     //This `setup` function will run when the image has loaded
     loader.load(setup);
   })
 
+  console.log(Application)
   // CONNECT METAMASK AND CHECK FOR CREAM WALLET
   emitter.on('connectWallet', async function () {
     await wallet.connect()
@@ -125,11 +136,17 @@ function store (state, emitter) {
   })
 
   // GET CREAM ADDRESS
-  emitter.on('deposit', async function (kittyId, wei) {
-    console.log(kittyId)
-    console.log(wei)
-    const tx = await wallet.deposit(kittyId, wei)
+  emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
+    console.log({ kittyId, x, y, rot, eth })
+    const tx = await wallet.deposit(kittyId, x, y, rot, eth)
     console.log({ tx })
+  })
+
+  emitter.on('withdrawCream', async function () {
+    const tx = await wallet.withdrawAll()
+    console.log({ tx })
+    emitter.emit('getCompoundBalance')
+    emitter.emit('getAllKitties')
   })
 
   emitter.on('getMyKitties', async function () {
@@ -159,7 +176,7 @@ function store (state, emitter) {
   })
 
   emitter.on('DOMContentLoaded', () => {
-    
+
 
     setTimeout(function(){
       if (state.route === 'wall'){
