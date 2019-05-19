@@ -2,6 +2,7 @@
 html {
   height: 100vh;
   width: 100vw;
+
 }
 
 @import url('https://fonts.googleapis.com/css?family=Baloo.css');
@@ -14,4 +15,12 @@ h1, h2, h3, h4 {
 
 body {
   /* overflow: hidden; */
+}
+
+#canvas {
+  cursor: url(/assets/cursor.png) 32 32, auto;
+}
+
+canvas {
+  cursor: url(/assets/cursor.png) 32 32, auto;
 }

@@ -26,28 +26,30 @@ function store (state, emitter) {
     resolution: 1
   });
 
-  // app.renderer.resize(window.innerWidth, window.innerHeight);
-  app.stage.interactive = true
-  app.renderer.backgroundColor = 0xf8f94c;
+  app.stage.interactive = true;
+  app.stage.hitArea = new PIXI.Rectangle(0, 0, 2000, 2000);
+  app.stage.defaultCursor = "url(/assets/cursor.png) 32 32, auto;";
+  app.stage.cursor = "url(/assets/cursor.png) 32 32, auto;";
+
+
+  // CURSOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   app.renderer.plugins.interaction.on('pointerup', onClick)
-  app.renderer.plugins.interaction.on('pointermove', event => {
-
-    if (!state.activeKitty) return
-    const coords = { x: event.data.global.x, y: event.data.global.y }
-    const n = (state.activeKitty.lastIndexOf('/'))
-    const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
-    if (!resources[`cat${kittyId}`]) loader.add(`cat${kittyId}`, state.activeKitty)
-    let catSprite = new Sprite(resources[`cat${kittyId}`].texture)
-    catSprite.x = Math.abs(coords.x)
-    catSprite.y = Math.abs(coords.y)
-    catSprite.width = 200
-    catSprite.height = 200
-    catSprite.angle = state.rotated
-    app.stage.addChild(catSprite)
-    console.log({catSprite})
-    app.renderer.render(app.stage)
-
-  })
 
   function onClick (event) {
     const coords = { x: event.data.global.x, y: event.data.global.y }
@@ -207,7 +209,15 @@ function store (state, emitter) {
 
     setTimeout(function(){
       if (state.route === 'wall'){
-        document.getElementById('canvas').appendChild(app.view);
+        const canvasContainer = document.getElementById('canvas')
+        canvasContainer.appendChild(app.view)
+        const canvas = document.getElementsByTagName('canvas')[0]
+        // canvas.style.removeProperty('cursor')
+        canvasContainer.style.setProperty('cursor', 'url(/assets/cursor.png) 32 32, auto;')
+        console.log(canvasContainer.style.getProperty('cursor'))
+        // console.log(canvasContainer)
+        // console.log(canvasContainer.style)
+        // console.log("style removed")
       }
      }, 1000);
   })

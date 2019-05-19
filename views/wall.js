@@ -125,7 +125,7 @@ function view (state, emit) {
                 catElem.onclick = function() {
                     state.activeKitty = (catElem.children[0].getAttribute('src'))
                     console.log(document.getElementsByTagName('body'))
-                    document.getElementsByTagName('body')[0].style.cursor = state.activeKitty
+                    // document.getElementsByTagName('body')[0].style.cursor = 'crosshair'
                 };
             }
             clearInterval(interval)
