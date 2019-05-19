@@ -75,8 +75,8 @@ input[type=range]::-moz-range-track {
   background: #3071a9;
   border-radius: 1.3px;
   border: 0.2px solid #010101;
-}   
-#canvas {
+}
+#canvasBackground {
   cursor: url(/assets/cursor.png) 32 32, auto;
 }
 
