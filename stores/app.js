@@ -37,8 +37,6 @@ function store (state, emitter) {
 
   emitter.on('canvasClick', async (coords) => {
     if (state.activeKitty) {
-      console.log('YEAH WE HAVE A CAT')
-      console.log(state.activeKitty)
       const n = (state.activeKitty.lastIndexOf('/'))
       const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
       emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), Math.floor((Math.random() * 360)), '0.01')
@@ -67,18 +65,15 @@ function store (state, emitter) {
     })
 
     function setup() {
-
-      const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
-      const kittyShadow = new DropShadowFilter({
-        distance: 0.1,
-        color: 0x000000,
-        alpha: 0.1,
-        blur: 1
-      })
+      // const kittyStroke = new OutlineFilter(5, 0xFFFFF0)
+      // const kittyShadow = new DropShadowFilter({
+      //   distance: 0.1,
+      //   color: 0x000000,
+      //   alpha: 0.1,
+      //   blur: 1
+      // })
       //Create the cat sprite
-      console.log(state.kitties)
       state.kitties.map((cat, i) => {
-        console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
@@ -94,7 +89,6 @@ function store (state, emitter) {
     loader.load(setup);
   })
 
-  console.log(Application)
   // CONNECT METAMASK AND CHECK FOR CREAM WALLET
   emitter.on('connectWallet', async function () {
     await wallet.connect()
