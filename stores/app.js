@@ -34,14 +34,20 @@ function store (state, emitter) {
     emitter.emit('canvasClick', coords)
   }
 
-  emitter.on('canvasClick', async () => {
-
+  emitter.on('canvasClick', async (coords) => {
+    if (state.activeKitty) {
+      console.log('YEAH WE HAVE A CAT')
+      console.log(state.activeKitty)
+      const n = (state.activeKitty.lastIndexOf('/'))
+      const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
+      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), Math.floor((Math.random() * 360)), '0.01')
+    }
   })
 
   //FILTERS
 
   emitter.on('KittiesLoaded', function () {
-    app.stage.removeChildren()
+    // app.stage.removeChildren()
     console.log('SHOULD HAVE REMOVED ALL CHILDREN')
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
@@ -70,10 +76,12 @@ function store (state, emitter) {
       //Create the cat sprite
       console.log(state.kitties)
       state.kitties.map((cat, i) => {
+        console.log({cat})
         let catSprite = new Sprite(resources['cat' + i].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
         catSprite.angle = cat.rot
+        console.log({catSprite})
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);
         catSprite.filters = [kittyStroke, kittyShadow]
@@ -90,6 +98,7 @@ function store (state, emitter) {
     state.isDeployed = isDeployed
     if (state.isDeployed) {
       emitter.emit('getWallet')
+      emitter.emit('getMyKitties')
       emitter.emit('getAllKitties')
       return
     }
@@ -125,10 +134,9 @@ function store (state, emitter) {
   })
 
   // GET CREAM ADDRESS
-  emitter.on('deposit', async function (kittyId, wei) {
-    console.log(kittyId)
-    console.log(wei)
-    const tx = await wallet.deposit(kittyId, wei)
+  emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
+    console.log({ kittyId, x, y, rot, eth })
+    const tx = await wallet.deposit(kittyId, x, y, rot, eth)
     console.log({ tx })
   })
 
@@ -137,6 +145,14 @@ function store (state, emitter) {
     console.log({ tx })
     emitter.emit('getCompoundBalance')
     emitter.emit('getAllKitties')
+  })
+
+  emitter.on('getMyKitties', async function () {
+    let myWallet = await wallet.getMyAddress()
+    let myKitties = await ckUtils.getKitties(myWallet)
+    state.myKitties = myKitties
+    state.myWallet = myWallet
+    console.log(myKitties)
   })
 
   emitter.on('getAllKitties', async function () {
@@ -158,6 +174,8 @@ function store (state, emitter) {
   })
 
   emitter.on('DOMContentLoaded', () => {
+
+
     setTimeout(function(){
       if (state.route === 'wall'){
         document.getElementById('canvas').appendChild(app.view);

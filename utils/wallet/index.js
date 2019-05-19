@@ -27,6 +27,9 @@ const funcs = {
     console.log(myCreamAddress)
     return (myCreamAddress !== ZERO_ADDRESS)
   },
+  getMyAddress: async () => {
+    return myAddress
+  },
   getWallet: async () => {
     const f = getFactoryContract()
     myCreamAddress = await f.creams(myAddress)
@@ -88,7 +91,7 @@ const funcs = {
       kitties.push({
         id: kittyIds[i].id.toNumber(),
         value: ethers.utils.formatEther(fatcats[i]),
-        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].id.toNumber()}.svg`,
+        img: `https://img.cn.cryptokitties.co/0x06012c8cf97bead5deae237070f9587f8e7a266d/${kittyIds[i].id.toNumber()}.png`,
         x: kittyIds[i].x.toNumber(),
         y: kittyIds[i].y.toNumber(),
         rot: kittyIds[i].rot.toNumber()
@@ -97,13 +100,12 @@ const funcs = {
 
     return kitties
   },
-  deposit: async (kittyId, wei) => {
+  deposit: async (kittyId, x, y, rot, eth) => {
     const c = getCreamWallet()
     console.log(kittyId)
-    console.log(wei)
     console.log(c)
-    const tx = await c.meow(kittyId, {
-      value: ethers.utils.parseEther('0.01')
+    const tx = await c.meow(kittyId, x, y, rot, {
+      value: ethers.utils.parseEther(eth)
     })
     console.log(tx)
     await tx.wait()
