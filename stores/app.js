@@ -8,6 +8,7 @@ module.exports = store
 function store (state, emitter) {
 
   state.wallet = false
+  state.ids = []
 
   // Get crypto kitties utilities
   const ckUtils = require('../utils/kittys')
@@ -54,6 +55,7 @@ function store (state, emitter) {
     userAddresses.map(function(key) {
       state.kittyData[key].length > 0 && state.kittyData[key].map((kitty) => {
         kitties.push(kitty)
+        state.ids.push(kitty.id)
       })
       state.kitties = kitties
     });
@@ -139,6 +141,7 @@ function store (state, emitter) {
   emitter.on('deposit', async function (kittyId, x, y, rot, eth) {
     console.log({ kittyId, x, y, rot, eth })
     const tx = await wallet.deposit(kittyId, x, y, rot, eth)
+    emitter.emit('getAllKitties')
     console.log({ tx })
   })
 

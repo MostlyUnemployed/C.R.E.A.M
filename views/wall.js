@@ -114,6 +114,7 @@ function view (state, emit) {
     let interval = setInterval(() => {
         if (state.myKitties) {
             const elems = state.myKitties.map((cat) => {
+                if (state.ids.indexOf(cat.id) !== -1) return ``
                 return `<div class='catOption'><img src=${cat.image_url} /></div>`
             })
             let elemString = ''
