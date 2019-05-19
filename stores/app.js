@@ -58,13 +58,28 @@ function store (state, emitter) {
 
 
   emitter.on('canvasClick', async (coords) => {
+    let kittyId = getNextKitty()
     if (state.activeKitty) {
       const n = (state.activeKitty.lastIndexOf('/'))
-      const kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
-      emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, '0.01')
-      state.activeKitty = null
+      let kittyId = state.activeKitty.substring(n + 1, state.activeKitty.length - 4)
     }
+    emitter.emit('deposit', kittyId, Math.floor(coords.x), Math.floor(coords.y), state.rotated, '0.01')
+    state.activeKitty = null
   })
+
+  function getNextKitty() {
+    const kittiesCanStick = removeAlreadyStuck(state.myKitties)
+    return kittiesCanStick[0].id
+  }
+
+  function removeAlreadyStuck(kitties) {
+    const safe = kitties.filter((k) => {
+      return state.ids.indexOf(k.id) === -1
+    })
+    return safe
+  }
+
+
 
   //FILTERS
 
@@ -81,6 +96,7 @@ function store (state, emitter) {
       state.kitties = kitties
     });
 
+    state.nextKitty = getNextKitty()
 
     // maps loaded kitties and adds them to Pixi Loader
     // loader.reset()
@@ -184,7 +200,6 @@ function store (state, emitter) {
     let myKitties = await ckUtils.getKitties(myWallet)
     state.myKitties = myKitties
     state.myWallet = myWallet
-    console.log(myKitties)
   })
 
   emitter.on('getAllKitties', async function () {

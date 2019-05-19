@@ -28,10 +28,8 @@ function view (state, emit) {
                     // document.getElementsByTagName('body')[0].style.cursor = 'crosshair'
                 };
             }
-            clearInterval(interval)
+            // clearInterval(interval)
         }
-
-
     }, 2000)
 
 
