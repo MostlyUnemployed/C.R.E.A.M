@@ -107,7 +107,7 @@ function view (state, emit) {
         outline: none;
       }
 
-      
+
   `
 
 
@@ -155,7 +155,7 @@ function view (state, emit) {
     var slider = document.getElementById("scale");
     var output = document.getElementById("scaleText");
     output.innerHTML = `${slider.value}x Scale`
-    
+
 }
 
     setInterval(() => document.getElementById('balance').innerText = state.supplyBalance || '0.00', 500)
@@ -164,9 +164,9 @@ function view (state, emit) {
     <body>
     <div id='cream'>
         <div class='balance'>My Cream: <span id='balance'></span>💦</div>
-        <button class='withdraw flex items-center justify-center'>Lick 👅</button>
+        <button class='withdraw flex items-center justify-center' onclick=${() => emit('withdrawCream')}>Lick 👅</button>
     </div>
-    
+
     <section id='sidebar' class='${sidebarStyles}'>
         <button onclick='${() => toggleSideBar()}'>${'>>'}</button>
         <div class='pa1'>
@@ -183,7 +183,7 @@ function view (state, emit) {
         </div>
         <div id='container'>
             <div id='myCatsList'>
-            
+
             </div>
         </div>
     </section>

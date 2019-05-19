@@ -125,7 +125,7 @@ const funcs = {
   withdrawAll: async () => {
     const c = getCreamWallet()
     const bal = await funcs.getCompoundBalance()
-    const n = assist.notify('pending', `Withdrawing ${ethers.utils.formatEther(bal)} ETH`, 10000)
+    const n = assist.notify('pending', `Withdrawing ~${Number(bal).toFixed(2)} ETH`, 10000)
     const tx = await c.lick(ethers.utils.parseEther(bal))
     await tx.wait()
     n()

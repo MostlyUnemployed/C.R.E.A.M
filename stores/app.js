@@ -14,7 +14,7 @@ function store (state, emitter) {
   const ckUtils = require('../utils/kittys')
   //Defining Pixi Aliases
   const Application = PIXI.Application
-  const loader = PIXI.Loader.shared
+  let loader = PIXI.Loader.shared
   const resources = PIXI.Loader.shared.resources
   const Sprite = PIXI.Sprite
   //Create a Pixi Application
@@ -46,7 +46,7 @@ function store (state, emitter) {
   //FILTERS
 
   emitter.on('KittiesLoaded', function () {
-    // app.stage.removeChildren()
+    app.stage.removeChildren()
     console.log('SHOULD HAVE REMOVED ALL CHILDREN')
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
@@ -60,8 +60,11 @@ function store (state, emitter) {
 
 
     // maps loaded kitties and adds them to Pixi Loader
-    state.kitties.map((cat, i) => {
-      loader.add(`cat${i}`, cat.img)
+    // loader.reset()
+    // loader = PIXI.Loader.shared
+    state.kitties.map((cat) => {
+      if (resources[`cat${cat.id}`]) return
+      loader.add(`cat${cat.id}`, cat.img)
     })
 
     function setup() {
@@ -74,7 +77,8 @@ function store (state, emitter) {
       // })
       //Create the cat sprite
       state.kitties.map((cat, i) => {
-        let catSprite = new Sprite(resources['cat' + i].texture);
+        console.log(resources)
+        let catSprite = new Sprite(resources[`cat${cat.id}`].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
         catSprite.width = 200
