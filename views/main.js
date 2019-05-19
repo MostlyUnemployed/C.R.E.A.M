@@ -3,7 +3,7 @@ var css = require('sheetify')
 var Menu = require('../components/menu')
 var menu = new Menu()
 
-var TITLE = 'sticker-interest - main'
+var TITLE = 'Meow'
 
 module.exports = view
 
