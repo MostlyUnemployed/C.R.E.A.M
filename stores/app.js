@@ -85,9 +85,10 @@ function store (state, emitter) {
 
   emitter.on('KittiesLoaded', function () {
     app.stage.removeChildren()
-    console.log('SHOULD HAVE REMOVED ALL CHILDREN')
+
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
+    console.log(state.kittyData)
     userAddresses.map(function(key) {
       state.kittyData[key].length > 0 && state.kittyData[key].map((kitty) => {
         kitties.push(kitty)
@@ -116,12 +117,12 @@ function store (state, emitter) {
       // })
       //Create the cat sprite
       state.kitties.map((cat, i) => {
-        console.log(resources)
         let catSprite = new Sprite(resources[`cat${cat.id}`].texture);
         catSprite.x = Math.abs(cat.x)
         catSprite.y = Math.abs(cat.y)
-        catSprite.width = 75
-        catSprite.height = 75
+        let sizeMultiplier = (cat.value / 0.01).toString().length
+        catSprite.width = sizeMultiplier * 75
+        catSprite.height = sizeMultiplier * 75
         catSprite.angle = cat.rot
         //Add the catSprite to the stage (canvas)
         app.stage.addChild(catSprite);

@@ -11,7 +11,6 @@ function view (state, emit) {
 
  
     let interval = setInterval(() => {
-        console.log('trying')
         if (state.myKitties) {
             const elems = state.myKitties.map((cat) => {
                 if (state.ids.indexOf(cat.id) !== -1) return ``
@@ -60,8 +59,8 @@ function view (state, emit) {
     var slider = document.getElementById("scale");
     var output = document.getElementById("scaleText");
     output.innerHTML = `${slider.value}x Sticker Size`
-
-}
+    state.scaleValue = slider.value
+    }
         const withdrawMoney = () => {
             emit('withdrawCream')
         }
