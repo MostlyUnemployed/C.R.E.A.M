@@ -1,6 +1,6 @@
 module.exports = {
   creamFactory: {
-    address: '0x7ff0a6b9a2c52649407fc7f3915360ea534cbb8d',
+    address: '0x397e179ecd455067b4678fc55d1f7e06b3e7d738',
     abi: [
       {
         "constant": false,
@@ -259,11 +259,11 @@ module.exports = {
     ]
   },
   weth: {
-    address: '0xc778417E063141139Fce010982780140Aa0cD5Ab'
+    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
   },
   compound: {
-    address: '0x61bbd7Bd5EE2A202d7e62519750170A52A8DFD45', // RINKEBY
-    // address: '0x3FDA67f7583380E67ef93072294a7fAc882FD7E7', // MAINNET
+    // address: '0x61bbd7Bd5EE2A202d7e62519750170A52A8DFD45', // RINKEBY
+    address: '0x3FDA67f7583380E67ef93072294a7fAc882FD7E7', // MAINNET
     abi: [
       {
         "constant": true,

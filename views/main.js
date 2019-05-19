@@ -11,6 +11,10 @@ function view (state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
 
   const mainStyles = css`
+  body {
+    height: 100vh;
+    width: 100vw;
+  }
   .bg {
     background: #FDFF9C;
   }
@@ -80,7 +84,7 @@ function view (state, emit) {
         <div class='bigtext tc f1'>C.R.E.A.M.</div>
         <button class='tc cta f2 pa5 pt3 pb3' onclick='${() => {
           emit('createWallet')
-        }}'>I am over 18</button>
+        }}'>Start Making Stacks</button>
       </div>
       </body>
       `
