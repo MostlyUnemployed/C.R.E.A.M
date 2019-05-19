@@ -18,4 +18,6 @@ app.route('/', require('./views/main'))
 app.route('/wall', require('./views/wall'))
 app.route('/*', require('./views/404'))
 
-module.exports = app.mount('body')
+// module.exports = app.mount('body')
+const element = app.start()
+document.body.appendChild(element)
