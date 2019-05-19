@@ -92,7 +92,7 @@ function store (state, emitter) {
 
     let userAddresses = Object.keys(state.kittyData)
     let kitties = []
-    console.log(state.kittyData)
+    state.ids = []
     userAddresses.map(function(key) {
       state.kittyData[key].length > 0 && state.kittyData[key].map((kitty) => {
         kitties.push(kitty)
@@ -136,6 +136,7 @@ function store (state, emitter) {
     }
     //This `setup` function will run when the image has loaded
     loader.load(setup);
+    state.reloadWall()
   })
 
   // CONNECT METAMASK AND CHECK FOR CREAM WALLET

@@ -9,7 +9,7 @@ module.exports = view
 function view (state, emit) {
   if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
 
-
+  state.reloadWall = () => {
     let interval = setInterval(() => {
         if (state.ids.length) {
             const elems = state.myKitties.map((cat) => {
@@ -29,7 +29,10 @@ function view (state, emit) {
             }
             clearInterval(interval)
         }
-    }, 2000)
+    })
+  }
+
+  state.reloadWall()
 
 
     const toggleSideBar = ()  => {
